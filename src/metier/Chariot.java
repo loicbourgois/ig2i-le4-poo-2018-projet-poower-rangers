@@ -60,6 +60,11 @@ public class Chariot {
 	}
 	return true;
     }
+    
+    public boolean addColis(Colis colis){
+	if(colis == null) return false;
+	return(this.colis.add(colis));
+    }
 
     @Override
     public String toString() {
