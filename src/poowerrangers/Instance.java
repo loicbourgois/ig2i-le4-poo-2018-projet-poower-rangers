@@ -5,6 +5,8 @@
  */
 package poowerrangers;
 
+import java.util.Objects;
+
 /**
  *
  * @author Rod
@@ -34,6 +36,40 @@ public class Instance {
     public String getPathToFile() {
         return pathToFile;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Instance other = (Instance) obj;
+        if (!Objects.equals(this.pathToFile, other.pathToFile)) {
+            return false;
+        }
+        if (!Objects.equals(this.entrepot, other.entrepot)) {
+            return false;
+        }
+        if (!Objects.equals(this.config, other.config)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Instance{" + "entrepot=" + entrepot.id + ", config=" + config + ", pathToFile=" + pathToFile + '}';
+    }
     
 }
