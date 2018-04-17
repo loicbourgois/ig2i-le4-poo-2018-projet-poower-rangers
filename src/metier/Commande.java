@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Commande {
     private Map<Produit,Integer> produitCommande;
     private Map<Produit,Integer> produitRestant;
-    private int Integer;
+    private int id;
     private int nbColis;
 
     public Commande() {
@@ -26,7 +26,7 @@ public class Commande {
 
     public Commande(int Integer, int nbColis) {
         this();
-        this.Integer = Integer;
+        this.id = Integer;
         this.nbColis = nbColis;
     }
 
@@ -44,7 +44,7 @@ public class Commande {
     }
 
     public int getInteger() {
-        return Integer;
+        return id;
     }
 
     public int getNbColis() {
@@ -69,7 +69,7 @@ public class Commande {
             return false;
         }
         final Commande other = (Commande) obj;
-        if (this.Integer != other.Integer) {
+        if (this.id != other.id) {
             return false;
         }
         if (this.nbColis != other.nbColis) {
@@ -86,7 +86,7 @@ public class Commande {
 
     @Override
     public String toString() {
-        return "Commande{" + "produitCommande=" + produitCommande + ", produitRestant=" + produitRestant + ", Integer=" + Integer + ", nbColis=" + nbColis + '}';
+        return "Commande{" + "produitCommande=" + produitCommande + ", produitRestant=" + produitRestant + ", Integer=" + id + ", nbColis=" + nbColis + '}';
     }
     
 }
