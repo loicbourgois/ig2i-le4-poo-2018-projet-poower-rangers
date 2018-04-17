@@ -24,8 +24,7 @@ public class Colis {
         this.produits = new HashMap<Produit,Integer>();
     }
 
-    
-    public Colis(int id, int poidsRestant, int volumeRestant, Commande commande, Map<Produit, Integer> produits) {
+    public Colis(int id, int poidsRestant, int volumeRestant, Commande commande) {
         this();
         this.id = id;
         this.poidsRestant = poidsRestant;
