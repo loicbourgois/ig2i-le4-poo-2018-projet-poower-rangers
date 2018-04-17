@@ -49,5 +49,40 @@ public class Configuration {
     public int getValueMax() {
         return valueMax;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Configuration other = (Configuration) obj;
+        if (this.nbBoxesTrolley != other.nbBoxesTrolley) {
+            return false;
+        }
+        if (this.poidsMax != other.poidsMax) {
+            return false;
+        }
+        if (this.valueMax != other.valueMax) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Configuration{" + "nbBoxesTrolley=" + nbBoxesTrolley + ", poidsMax=" + poidsMax + ", valueMax=" + valueMax + '}';
+    }
     
 }
