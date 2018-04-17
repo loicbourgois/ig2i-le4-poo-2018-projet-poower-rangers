@@ -32,6 +32,42 @@ public class Produit {
             this.volume = volume;
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Produit other = (Produit) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.poids != other.poids) {
+            return false;
+        }
+        if (this.volume != other.volume) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Produit{" + "id=" + id + ", poids=" + poids + ", volume=" + volume + '}';
+    }
+    
     
     
 }
