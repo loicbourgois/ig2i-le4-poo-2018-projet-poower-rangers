@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package poowerrangers;
+package metier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,14 +24,17 @@ public class Commande {
         this.produitRestant = new HashMap<>();
     }
 
-    public Commande(Map<Produit, Integer> produitCommande, Map<Produit, Integer> produitRestant, int Integer, int nbColis) {
+    public Commande(int Integer, int nbColis) {
         this();
-        this.produitCommande = produitCommande;
-        this.produitRestant = produitRestant;
         this.Integer = Integer;
         this.nbColis = nbColis;
     }
 
+    public void addProduitQuantité(Produit p, Integer q){
+        this.produitCommande.put(p, q);
+        this.produitRestant.put(p, q);
+    }
+    
     public Map<Produit, Integer> getProduitCommande() {
         return produitCommande;
     }
