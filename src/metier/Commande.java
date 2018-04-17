@@ -102,7 +102,7 @@ public class Commande {
 
     @Override
     public String toString() {
-        return "Commande{" + "produitCommande=" + produitsCommandes + ", produitRestant=" + produitsRestants + ", Integer=" + id + ", nbColis=" + nbColis + '}';
+        return "Commande{" + "produitCommande=[" + produitsCommandes + "],\n produitRestant=[" + produitsRestants + "],\n Integer=" + id + ", nbColis=" + nbColis + '}'+ "\n";
     }
     
 }

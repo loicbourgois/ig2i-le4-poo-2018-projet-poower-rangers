@@ -86,6 +86,6 @@ public class Localisation {
 
     @Override
     public String toString() {
-	return "Localisation{" + "id=" + id + ", posX=" + posX + ", posY=" + posY +'}';
+	return "Localisation{" + "id=" + id + ", posX=" + posX + ", posY=" + posY  + '}' + "\n";
     }
 }

@@ -69,7 +69,7 @@ public class Instance {
 
     @Override
     public String toString() {
-        return "Instance{" + "entrepot=" + entrepot.getId() + ", config=" + config + ", pathToFile=" + pathToFile + '}';
+        return "Instance{" + "entrepot=" + entrepot.getId() + ", config=" + config + ", pathToFile=" + pathToFile + '}'+ "\n";
     }
     
 }

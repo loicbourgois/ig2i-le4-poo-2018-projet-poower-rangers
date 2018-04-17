@@ -94,7 +94,7 @@ public class Colis {
 
     @Override
     public String toString() {
-        return "Colis{" + "id=" + id + ", poidsRestant=" + poidsRestant + ", volumeRestant=" + volumeRestant + ", commande=" + commande + '}';
+        return "Colis{" + "id=" + id + ", poidsRestant=" + poidsRestant + ", volumeRestant=" + volumeRestant + ", commande=" + commande + '}'+ "\n";
     }
     
     

@@ -82,7 +82,7 @@ public class Configuration {
 
     @Override
     public String toString() {
-        return "Configuration{" + "nbBoxesTrolley=" + nbBoxesTrolley + ", poidsMax=" + poidsMax + ", valueMax=" + valueMax + '}';
+        return "Configuration{" + "nbBoxesTrolley=" + nbBoxesTrolley + ", poidsMax=" + poidsMax + ", valueMax=" + valueMax + '}'+ "\n";
     }
     
 }

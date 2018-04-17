@@ -109,7 +109,7 @@ public class Entrepot {
 
     @Override
     public String toString() {
-        return "Entrepot{" + "id=" + id + ", depots=" + depots + ", produits=" + produits + ", commandes=" + commandes + ", chariots=" + chariots + '}';
+        return "Entrepot{" + "id=" + id + ", depots=[" + depots + "],\n produits=[" + produits + "],\n commandes=[" + commandes + "],\n chariots=[" + chariots + "\n}";
     }
     
     

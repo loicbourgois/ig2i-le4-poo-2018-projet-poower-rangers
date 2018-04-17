@@ -68,7 +68,7 @@ public class Chariot {
 
     @Override
     public String toString() {
-	return "Chariot{" + "id=" + id + ", colis=" + colis + '}';
+	return "Chariot{" + "id=" + id + ", colis=" + colis + '}'+ "\n";
     }
     
 }
