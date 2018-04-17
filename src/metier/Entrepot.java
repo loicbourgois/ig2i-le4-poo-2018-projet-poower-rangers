@@ -18,8 +18,7 @@ public class Entrepot {
     private Set<Localisation> depots;
     private Set<Produit> produits;
     private Set<Commande> commandes;
-    //TODO Implementer Chariot
-    //private Set<Chariot> chariots;
+    private Set<Chariot> chariots;
 
     public Entrepot() {
 	depots = new HashSet<>();
@@ -51,6 +50,10 @@ public class Entrepot {
 	return id;
     }
 
+    public Set<Chariot> getChariots() {
+        return chariots;
+    }
+
     public Set<Localisation> getDepots() {
 	return depots;
     }
@@ -65,41 +68,45 @@ public class Entrepot {
 
     @Override
     public int hashCode() {
-	int hash = 7;
-	return hash;
+        int hash = 7;
+        return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	final Entrepot other = (Entrepot) obj;
-	if (this.id != other.id) {
-	    return false;
-	}
-	if (!Objects.equals(this.depots, other.depots)) {
-	    return false;
-	}
-	if (!Objects.equals(this.produits, other.produits)) {
-	    return false;
-	}
-	if (!Objects.equals(this.commandes, other.commandes)) {
-	    return false;
-	}
-	return true;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Entrepot other = (Entrepot) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.depots, other.depots)) {
+            return false;
+        }
+        if (!Objects.equals(this.produits, other.produits)) {
+            return false;
+        }
+        if (!Objects.equals(this.commandes, other.commandes)) {
+            return false;
+        }
+        if (!Objects.equals(this.chariots, other.chariots)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-	return "Entrepot{" + "id=" + id + ", depots=" + depots + ", produits=" + produits + ", commandes=" + commandes + '}';
+        return "Entrepot{" + "id=" + id + ", depots=" + depots + ", produits=" + produits + ", commandes=" + commandes + ", chariots=" + chariots + '}';
     }
+    
     
     
     
