@@ -12,13 +12,13 @@ import java.util.Objects;
  * @author Rod
  */
 public class Instance {
-    private Entrepot entrepot;
+    //private Entrepot entrepot;
     private Configuration config;
     private String pathToFile;
 
     public Instance() {
     }
-
+/*
     public Instance(Entrepot entrepot, Configuration config, String pathToFile) {
         this.entrepot = entrepot;
         this.config = config;
@@ -28,7 +28,7 @@ public class Instance {
     public Entrepot getEntrepot() {
         return entrepot;
     }
-
+*/
     public Configuration getConfig() {
         return config;
     }
@@ -57,10 +57,10 @@ public class Instance {
         final Instance other = (Instance) obj;
         if (!Objects.equals(this.pathToFile, other.pathToFile)) {
             return false;
-        }
+        }/*
         if (!Objects.equals(this.entrepot, other.entrepot)) {
             return false;
-        }
+        }*/
         if (!Objects.equals(this.config, other.config)) {
             return false;
         }
@@ -69,7 +69,7 @@ public class Instance {
 
     @Override
     public String toString() {
-        return "Instance{" + "entrepot=" + entrepot.id + ", config=" + config + ", pathToFile=" + pathToFile + '}';
+        return "Instance{" + "entrepot="/* + entrepot.id*/ + ", config=" + config + ", pathToFile=" + pathToFile + '}';
     }
     
 }
