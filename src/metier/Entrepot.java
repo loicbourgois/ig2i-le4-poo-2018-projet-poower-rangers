@@ -46,6 +46,11 @@ public class Entrepot {
 	return(commandes.add(commande));
     }
 
+    public boolean addChariot(Chariot c){
+        if(this.chariots.contains(c)) return false;
+        return (this.chariots.add(c));
+    }
+    
     public int getId() {
 	return id;
     }
