@@ -30,7 +30,7 @@ public class Commande {
         this.nbColis = nbColis;
     }
 
-    public void addProduitQuantité(Produit p, Integer q){
+    public void addProduitQuantite(Produit p, Integer q){
         this.produitCommande.put(p, q);
         this.produitRestant.put(p, q);
     }
