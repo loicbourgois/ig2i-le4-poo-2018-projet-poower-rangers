@@ -40,7 +40,7 @@ public class Instance {
 
     public Instance() {
     }
-		
+
 		public Instance(String pathToFile) {
 			this.pathToFile = pathToFile;
 			this.locationCount = -1;
@@ -216,11 +216,15 @@ public class Instance {
 		} catch (IOException ex) {
 			Logger.getLogger(Instance.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
-		
-		
 		return true;
 	}
+		
+		private boolean dispatch() {
+			System.out.println("dispatching");
+			// TODO : move data from ints and ArrayList (lines 25 to 39) 
+			// to proper Objects.
+			return true;
+		}
 
     @Override
     public String toString() {
@@ -251,5 +255,6 @@ public class Instance {
 		Instance instance = new Instance("./instances/instance_0116_131940_Z2.txt");
 		instance.parse();
 		System.out.println(instance.toString());
+		instance.dispatch();
 	}
 }
