@@ -92,9 +92,8 @@ public class Instance {
     }
 		
 		private boolean parse() {
-		System.out.println("parsing");
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
+			System.out.println("parsing");
+			try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
 				String line;
 				while ((line = br.readLine()) != null) {
 					if(line.startsWith("//NbLocations")) {
@@ -112,7 +111,6 @@ public class Instance {
 					} else if(line.startsWith("//B: CapaBox")) {
 						line = br.readLine();
 						String[] dimensions = line.split(" ");
-						System.out.println(dimensions[0]);
 						for(int i = 0 ; i < dimensions.length ; i++) {
 							this.boxDimensions.add(Integer.parseInt(dimensions[i]));
 						}
@@ -247,14 +245,28 @@ public class Instance {
 							+ "\t" + "arcs : " + arcs + ",\n"
 							+ "\t" + "arcs2 : " + arcs2 + ",\n"
 							+ "\t" + "locations : " + locations + ",\n"
-							+ '}'+ "\n";
+							+ '}';
 		}
 	
 	public static void main(String[] args) {
-		System.out.println("Start Instance");
-		Instance instance = new Instance("./instances/instance_0116_131940_Z2.txt");
-		instance.parse();
-		System.out.println(instance.toString());
-		instance.dispatch();
+		ArrayList<String> files = new ArrayList<String>();
+		files.add("./instances/instance_0116_131940_Z2.txt");
+		files.add("./instances/instance_0116_131950_Z1.txt");
+		files.add("./instances/instance_0130_132439_Z2.txt");
+		files.add("./instances/instance_0202_132568_Z2.txt");
+		files.add("./instances/instance_0203_132623_Z1.txt");
+		files.add("./instances/instance_0214_132873_Z2.txt");
+		files.add("./instances/instance_0215_132916_Z2.txt");
+		files.add("./instances/instance_0606_136170_Z1.txt");
+		files.add("./instances/instance_0606_136175_Z1.txt");
+		files.add("./instances/instance_0606_136178_Z1.txt");
+		for(int i = 0 ; i < files.size() ; i++) {
+			System.out.println("----------------");
+			Instance instance = new Instance(files.get(i));
+			instance.parse();
+			System.out.println(instance.toString());
+			instance.dispatch();
+		}
+		
 	}
 }
