@@ -1,0 +1,28 @@
+{
+	"name": "ig2i-le4-poo-2018-projet-poower-rangers",
+	"version": "1.0.0",
+	"description": "## Testing CheckerBatchingPicking.jar",
+	"main": "index.js",
+	"directories": {
+		"lib": "lib",
+		"test": "test"
+	},
+	"dependencies": {
+		"linteverything": "^0.9.4"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "linteverything"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/loicbourgois/ig2i-le4-poo-2018-projet-poower-rangers.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/loicbourgois/ig2i-le4-poo-2018-projet-poower-rangers/issues"
+	},
+	"homepage": "https://github.com/loicbourgois/ig2i-le4-poo-2018-projet-poower-rangers#readme"
+}
