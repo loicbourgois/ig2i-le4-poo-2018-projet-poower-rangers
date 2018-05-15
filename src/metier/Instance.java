@@ -52,7 +52,8 @@ public class Instance {
     private boolean dispatch() {
             System.out.println("dispatching");
             ArrayList allLocation = new ArrayList<Localisation>();
-            ArrayList allPoducts = new ArrayList<Produit>();
+            ArrayList allProducts = new ArrayList<Produit>();
+            ArrayList commandes = new ArrayList<Commande>();
             
             //Location
             for(ArrayList<String> l : locations){
@@ -70,18 +71,20 @@ public class Instance {
             //Products
             for(ArrayList<Integer> p : products){
                 Localisation l = (Localisation)allLocation.get(p.get(1));
-                allPoducts.add(new Produit(p.get(0),p.get(2),p.get(3),l));
-                System.out.println(l);
+                allProducts.add(new Produit(p.get(0),p.get(2),p.get(3),l));
             }
+            //System.out.println(allProducts);
             
             //Commande
-            ArrayList commandes = new ArrayList<Commande>();
             for(ArrayList<Integer> order : orders){
                 Commande c = new Commande(order.get(0),order.get(2));
-                for(int i=0;i<order.size();i+=2){
-                    Produit p = (Produit)allPoducts.get(order.get(i));
+                for(int i=3;i<order.size()-1;i+=2){
+                    Produit p = (Produit)allProducts.get(order.get(i)-1);
                     c.addProduitQuantite(p, order.get(i+1));
+                    //System.out.println(p);
                 }
+                commandes.add(c);
+            //System.out.println(c);
             }
             
             return true;
@@ -293,10 +296,10 @@ public class Instance {
         files.add("./instances/instance_0606_136175_Z1.txt");
         files.add("./instances/instance_0606_136178_Z1.txt");
         for(int i = 0 ; i < files.size() ; i++) {
-            System.out.println("----------------");
+            //System.out.println("----------------");
             Instance instance = new Instance(files.get(i));
             instance.parse();
-            System.out.println(instance.toString());
+            //System.out.println(instance.toString());
             instance.dispatch();
         }
     }
