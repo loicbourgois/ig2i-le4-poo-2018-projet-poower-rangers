@@ -5,8 +5,12 @@
  */
 package metier;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,6 +23,7 @@ public class Output {
 	private String str;
 	private boolean strGenerated;
 	private ArrayList<ArrayList<ArrayList<Integer>>> rounds;
+	private String filename;
 
 	public Output() {
 		this.roundCount = 0;
@@ -55,6 +60,15 @@ public class Output {
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 	
+	private void writeToFile() {
+		try (PrintWriter out = new PrintWriter(this.filename)) {
+				out.println(this.toString());
+				System.out.println("Writing successful");
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Output");
 		Output output = new Output();
@@ -74,5 +88,7 @@ public class Output {
 			}
 		}
 		System.out.println(output.toString());
+		output.filename = "./solutions/test_sol.txt";
+		output.writeToFile();
 	}
 }
