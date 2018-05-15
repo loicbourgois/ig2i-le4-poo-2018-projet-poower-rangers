@@ -74,6 +74,16 @@ public class Instance {
                 System.out.println(l);
             }
             
+            //Commande
+            ArrayList commandes = new ArrayList<Commande>();
+            for(ArrayList<Integer> order : orders){
+                Commande c = new Commande(order.get(0),order.get(2));
+                for(int i=0;i<order.size();i+=2){
+                    Produit p = (Produit)allPoducts.get(order.get(i));
+                    c.addProduitQuantite(p, order.get(i+1));
+                }
+            }
+            
             return true;
     }
     
