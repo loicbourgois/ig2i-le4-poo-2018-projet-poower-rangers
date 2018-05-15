@@ -49,26 +49,31 @@ public class Instance {
             this.boxDimensions = new ArrayList<Integer>();
     }
 
-    private boolean dispatch() {/*
+    private boolean dispatch() {
             System.out.println("dispatching");
             ArrayList allLocation = new ArrayList<Localisation>();
             ArrayList allPoducts = new ArrayList<Produit>();
-            int i=0;
             
+            //Location
             for(ArrayList<String> l : locations){
                 Localisation loc = new Localisation(Integer.parseInt(l.get(0)), Integer.parseInt(l.get(1)), Integer.parseInt(l.get(2)));
                 allLocation.add(loc);
-                i++;
             }
             
+            //Distance Location
+            for(ArrayList<Integer> a : arcs){
+                Localisation lDepart = (Localisation)allLocation.get(a.get(0));
+                Localisation lArrivee = (Localisation)allLocation.get(a.get(1));
+                lDepart.addDistance(lArrivee, a.get(2));
+            }
             
-            
+            //Products
             for(ArrayList<Integer> p : products){
                 Localisation l = (Localisation)allLocation.get(p.get(1));
                 allPoducts.add(new Produit(p.get(0),p.get(2),p.get(3),l));
                 System.out.println(l);
             }
-            */
+            
             return true;
     }
     
