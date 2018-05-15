@@ -23,6 +23,13 @@ public class Colis {
     public Colis() {
         this.produits = new HashMap<Produit,Integer>();
     }
+    
+    public Colis(int poidsRestant, int volumeRestant, Commande commande) {
+        this();
+        this.poidsRestant = poidsRestant;
+        this.volumeRestant = volumeRestant;
+        this.commande = commande;
+    }
 
     public Colis(int id, int poidsRestant, int volumeRestant, Commande commande) {
         this();
