@@ -288,8 +288,32 @@ public class Instance {
 						+ '}';
 	}
 
+	private String toStringDispatched() {
+		return "Instance{" + "\n"
+						+ "\t" + "entrepot : " + entrepot + ",\n"
+						+ "\t" + "config : " + config + ",\n"
+						+ "\t" + "pathToFile : " + pathToFile + ",\n"
+						//+ "\t" + "locationCount : " + locationCount + ",\n"
+						//+ "\t" + "procuctCount : " + procuctCount + ",\n"
+						//+ "\t" + "trolleyCount : " + trolleyCount + ",\n"
+						//+ "\t" + "dimensionCount : " + dimensionCount + ",\n"
+						//+ "\t" + "boxDimensions : " + boxDimensions + ",\n"
+						//+ "\t" + "acceptMixedOrders : " + acceptMixedOrders + ",\n"
+						//+ "\t" + "products : " + products + ",\n"
+						//+ "\t" + "orderCount : " + orderCount + ",\n"
+						//+ "\t" + "orders : " + orders + ",\n"
+						//+ "\t" + "verticesIntersectionsCount : " + verticesIntersectionsCount + ",\n"
+						//+ "\t" + "departingDepot : " + departingDepot + ",\n"
+						//+ "\t" + "arrivalDepot : " + arrivalDepot + ",\n"
+						//+ "\t" + "arcs : " + arcs + ",\n"
+						//+ "\t" + "arcs2 : " + shortestPath + ",\n"
+						//+ "\t" + "locations : " + locations + ",\n"
+						+ '}';
+	}
+
 	public static void main(String[] args) {
 		ArrayList<String> files = new ArrayList<>();
+		int limit = 1;
 		files.add("./instances/instance_0116_131940_Z2.txt");
 		files.add("./instances/instance_0116_131950_Z1.txt");
 		files.add("./instances/instance_0130_132439_Z2.txt");
@@ -300,12 +324,13 @@ public class Instance {
 		files.add("./instances/instance_0606_136170_Z1.txt");
 		files.add("./instances/instance_0606_136175_Z1.txt");
 		files.add("./instances/instance_0606_136178_Z1.txt");
-		for (int i = 0; i < files.size(); i++) {
+		for (int i = 0; i < files.size() && i < limit; i++) {
 			System.out.println("----------------");
 			Instance instance = new Instance(files.get(i));
 			instance.parse();
 			System.out.println(instance.toString());
 			instance.dispatch();
+			System.out.println(instance.toStringDispatched());
 		}
 	}
 }
