@@ -1,6 +1,10 @@
 # ig2i-le4-poo-2018-projet-poower-rangers
 
-## Testing CheckerBatchingPicking.jar
+## Testing all files with CheckerBatchingPicking.jar
+
+Run `python checker.py > checker.log`
+
+## Testing one file with CheckerBatchingPicking.jar
 
 Run `cd ./test ; java -jar CheckerBatchingPicking.jar instance_0116_131940_Z2.txt ; cd ../ `
 
@@ -29,3 +33,4 @@ You should get the following output :
 --> Distance totale : 485,20 m.
 
 ```
+

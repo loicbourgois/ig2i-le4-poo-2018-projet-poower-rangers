@@ -8,3 +8,4 @@ nbdist/
 .nb-gradle/
 node_modules/
 solutions/test_sol.txt
+checker.log
