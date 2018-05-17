@@ -15,14 +15,16 @@ import java.util.Set;
  */
 public class Chariot {
     private int id;
+    private final int capaMax;
     private Set<Colis> colis;
 
-    public Chariot() {
+    public Chariot(int capaMax) {
+        this.capaMax = capaMax;
 	this.colis = new HashSet<>();
     }
 
-    public Chariot(int id) {
-	this();
+    public Chariot(int id,int capaMax) {
+	this(capaMax);
 	this.id = id;
     }
 
