@@ -24,6 +24,9 @@ import metier.Produit;
  */
 public class Simple {
     private Instance instance;
+    
+    // TEST VARIABLES
+    private List<Chariot> chariots;
 
     public Simple(Instance instance) {
         this.instance = instance;
@@ -32,7 +35,7 @@ public class Simple {
     public void sampleSolution() {
         // AJOUTER CONDITION POUR NE PAS AJOUTER 2 COMMANDES DANS UN MEME COLIS
 
-        List<Chariot> chariots = new ArrayList<>();
+        chariots = new ArrayList<>();
         
         Set<Colis> colis = null;
         
@@ -102,6 +105,6 @@ public class Simple {
         
         Simple solution = new Simple(instance);
         
-        solution.simple();
+        solution.sampleSolution();
     }
 }
