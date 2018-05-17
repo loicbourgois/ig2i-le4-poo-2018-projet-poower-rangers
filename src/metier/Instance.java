@@ -91,7 +91,7 @@ public class Instance {
         return true;
     }
 		
-		private boolean parse() {
+		public boolean parse() {
 			System.out.println("parsing");
 			try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
 				String line;
@@ -217,7 +217,7 @@ public class Instance {
 		return true;
 	}
 		
-		private boolean dispatch() {
+		public boolean dispatch() {
 			System.out.println("dispatching");
 			// TODO : move data from ints and ArrayList (lines 25 to 39) 
 			// to proper Objects.
