@@ -54,7 +54,7 @@ public class Simple {
 
                 while(qtt > 0) {
                     if(chariots.isEmpty())
-                        chariots.add(new Chariot());
+                        chariots.add(new Chariot(config.getNbBoxesTrolley()));
                         
                     for(Chariot ch: chariots) {
                         indexChariot++; indexColis = 0;
@@ -77,7 +77,7 @@ public class Simple {
                         qtt--;
                     }
                     else if(chariots.size() == indexChariot){
-                        Chariot newChariot = new Chariot();
+                        Chariot newChariot = new Chariot(config.getNbBoxesTrolley());
                         Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), c);
                         chariots.add(newChariot);
                         newChariot.addColis(newColis);
