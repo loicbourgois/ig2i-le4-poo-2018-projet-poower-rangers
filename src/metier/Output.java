@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @author user
  */
 public class Output {
-	
+
 	private int roundCount;
 	private int colisCount;
 	private String str;
@@ -28,9 +28,9 @@ public class Output {
 	public Output() {
 		this.roundCount = 0;
 	}
-	
+
 	public String toString() {
-		if(!strGenerated) {
+		if (!strGenerated) {
 			this.generateStr();
 		}
 		return this.str;
@@ -41,13 +41,13 @@ public class Output {
 		this.str = this.str.concat("//NbTournees" + "\n");
 		this.str = this.str.concat(this.roundCount + "\n");
 		int idPackage = 1;
-		for(int i = 0 ; i < this.roundCount ; i++) {
+		for (int i = 0; i < this.roundCount; i++) {
 			this.str = this.str.concat("//IdTournes NbColis" + "\n");
-			this.str = this.str.concat((i+1) + " " + rounds.get(i).size() + "\n");
+			this.str = this.str.concat((i + 1) + " " + rounds.get(i).size() + "\n");
 			this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
-			for(int j = 0 ; j < rounds.get(i).size() ; j++) {
-				this.str = this.str.concat(idPackage + " " + "0" + " " + rounds.get(i).get(j).size()/2);
-				for(int k = 0 ; k < rounds.get(i).get(j).size() ; k++) {
+			for (int j = 0; j < rounds.get(i).size(); j++) {
+				this.str = this.str.concat(idPackage + " " + "0" + " " + rounds.get(i).get(j).size() / 2);
+				for (int k = 0; k < rounds.get(i).get(j).size(); k++) {
 					this.str = this.str.concat(" " + Integer.toString(rounds.get(i).get(j).get(k)));
 				}
 				this.str = this.str.concat("\n");
@@ -55,15 +55,15 @@ public class Output {
 			}
 		}
 	}
-	
+
 	private int getRand(int min, int max) {
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
-	
+
 	private void writeToFile() {
 		try (PrintWriter out = new PrintWriter(this.filename)) {
-				out.println(this.toString());
-				System.out.println("Writing successful");
+			out.println(this.toString());
+			System.out.println("Writing successful");
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -74,15 +74,15 @@ public class Output {
 		Output output = new Output();
 		output.roundCount = 2;
 		output.colisCount = 6;
-		output.rounds = new ArrayList<ArrayList<ArrayList<Integer>>>();
-		for(int i = 0 ; i < output.roundCount ; i++) {
-			output.rounds.add(new ArrayList<ArrayList<Integer>>());
-			for(int j = 0 ; j < output.colisCount ; j++) {
-				output.rounds.get(i).add(new ArrayList<Integer>());
+		output.rounds = new ArrayList<>();
+		for (int i = 0; i < output.roundCount; i++) {
+			output.rounds.add(new ArrayList<>());
+			for (int j = 0; j < output.colisCount; j++) {
+				output.rounds.get(i).add(new ArrayList<>());
 				int idProd = 1;
-				for(int k = 0 ; k < output.getRand(4, 8) ; k++) {
+				for (int k = 0; k < output.getRand(4, 8); k++) {
 					output.rounds.get(i).get(j).add(idProd);
-					output.rounds.get(i).get(j).add(output.getRand(1, 3));	
+					output.rounds.get(i).get(j).add(output.getRand(1, 3));
 					idProd += output.getRand(1, 2);
 				}
 			}
