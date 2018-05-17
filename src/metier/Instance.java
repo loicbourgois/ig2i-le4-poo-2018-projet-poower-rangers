@@ -38,6 +38,9 @@ public class Instance {
 	private ArrayList<ArrayList<Integer>> arcs;
 	private ArrayList<ArrayList<Integer>> shortestPath;
 	private ArrayList<ArrayList<String>> locations;
+        ArrayList allLocation = new ArrayList<Localisation>();
+        ArrayList allProducts = new ArrayList<Produit>();
+        ArrayList allOrders = new ArrayList<Commande>();
 	private static boolean DEBUG = false;
 
 	public Instance() {
@@ -53,9 +56,6 @@ public class Instance {
 
 	public boolean dispatch() {
 		System.out.println("dispatching");
-		ArrayList allLocation = new ArrayList<>();
-		ArrayList allProducts = new ArrayList<>();
-		ArrayList commandes = new ArrayList<>();
 
 		//Location
 		for (ArrayList<String> l : locations) {
@@ -89,11 +89,13 @@ public class Instance {
 					System.out.println(p);
 				}
 			}
-			commandes.add(c);
+			allOrders.add(c);
+                        entrepot.addCommande(c);
 			if (DEBUG) {
 				System.out.println(c);
 			}
 		}
+                
 		return true;
 	}
 
