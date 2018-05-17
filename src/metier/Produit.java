@@ -88,7 +88,7 @@ public class Produit {
 
     @Override
     public String toString() {
-        return "Produit{" + "id=" + id + ", poids=" + poids + ", volume=" + volume + "Localisation=" + localisation + '}'+ "\n";
+        return "\t\t\tProduit{" + "id=" + id + ", poids=" + poids + ", volume=" + volume + "Localisation=" + localisation + '}'+ "\n";
     }
     
     
