@@ -96,10 +96,12 @@ public class Simple {
     
     public static void main(String[] args) {
         Instance instance = new Instance("./instances/instance_0116_131950_Z1.txt");
-        // instance.parse();
+        instance.parse();
         System.out.println(instance.toString());
-        // instance.dispatch();
+        instance.dispatch();
         
         Simple solution = new Simple(instance);
+        
+        solution.simple();
     }
 }
