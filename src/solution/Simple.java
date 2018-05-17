@@ -24,8 +24,6 @@ import metier.Produit;
  */
 public class Simple {
     private Instance instance;
-    
-    private List<Colis> colis;
 
     public Simple(Instance instance) {
         this.instance = instance;
@@ -97,19 +95,6 @@ public class Simple {
     }
     
     public static void main(String[] args) {
-        List<String> listeNoms = new ArrayList<String>();
-        int a = 5, index = 0;
-        listeNoms.add("Bob");
-        listeNoms.add("Loïc");
-        listeNoms.add("Jacqueline");
-        
-        for(String nom: listeNoms) {
-            index++;
-            if(index ==  listeNoms.size())
-                listeNoms.add("Antoine");
-            System.out.println(nom);
-        }
-        
         
     }
 }
