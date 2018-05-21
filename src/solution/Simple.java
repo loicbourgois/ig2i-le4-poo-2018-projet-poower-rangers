@@ -44,8 +44,6 @@ public class Simple {
         Integer indexChariot = 0;
         Integer indexColis = 0;
         
-        System.out.println(commandes.toString());
-        
         for(Commande c: commandes) {
             for(Map.Entry<Produit, Integer> entry : c.getProduitCommande().entrySet()){
                 
@@ -55,7 +53,7 @@ public class Simple {
                 while(qtt > 0) {
                     if(chariots.isEmpty())
                         chariots.add(new Chariot(config.getNbBoxesTrolley()));
-                        
+                    indexChariot = 0;
                     for(Chariot ch: chariots) {
                         indexChariot++; indexColis = 0;
                         if(ch.getColis().isEmpty())
@@ -69,7 +67,9 @@ public class Simple {
                             addProduitColis(co, p, qtt);
                         }
                     }
-                    
+                    System.out.println("BTEST");
+                    System.out.println(chariots.get(indexChariot-1).getColis().size());
+                    System.out.println("TEST");
                     if(chariots.get(indexChariot-1).getColis().size() < config.getNbBoxesTrolley()) {
                         Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), c);
                         chariots.get(indexChariot-1).addColis(newColis);
@@ -87,7 +87,6 @@ public class Simple {
                 }
             }
         }
-        System.out.println(chariots.toString());
         return chariots;
     }
     
