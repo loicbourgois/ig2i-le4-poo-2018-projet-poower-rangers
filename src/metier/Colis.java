@@ -39,8 +39,17 @@ public class Colis {
         this.commande = commande;
     }
     
-    public void addProduitQuantite(Produit p , Integer q){
+    public boolean addProduitQuantite(Produit p , Integer q){
+        int poidsTotal = p.getPoids()*q;
+        int volumeTotal = p.getVolume()*q;
+        
+        if(this.poidsRestant - poidsTotal < 0) return false;
+        if(this.volumeRestant - volumeTotal < 0) return false;
+        
         this.produits.put(p, q);
+        this.poidsRestant -= poidsTotal;
+        this.poidsRestant -= volumeTotal;
+        return true;
     }
 
     public int getId() {
