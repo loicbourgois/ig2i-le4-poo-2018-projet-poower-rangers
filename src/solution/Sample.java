@@ -40,29 +40,10 @@ public class Sample {
         
         chariots.add(new Chariot(config.getNbBoxesTrolley()));
         
-        Boolean assigne = false;
-        
-        for(Colis col: colis) {
-            assigne = false;
-            for(Chariot ch: chariots) {
-                if(assigne) break;
-                if(ch.getColis().size() < config.getNbBoxesTrolley()) {
-                    ch.addColis(col);
-                    assigne = true;
-                }
-            }
-            
-            if(!assigne) {
-                Chariot newChariot = new Chariot(config.getNbBoxesTrolley());
-                newChariot.addColis(col);
-                chariots.add(newChariot);
-            }
-        }
-        
-        return chariots;
+        return colisToChariot(colis, chariots, config);
     }
     
-    public List<Colis> productToColis (Commande c, Configuration config) {
+    public List<Colis> productToColis(Commande c, Configuration config) {
         List<Colis> colis = new ArrayList<>();
         
         colis.add(new Colis(config.getPoidsMax(), config.getValueMax(), c));
@@ -94,6 +75,29 @@ public class Sample {
             }
         }
         return colis;
+    }
+    
+    public List<Chariot> colisToChariot(List<Colis> colis, List<Chariot> chariots, Configuration config) {
+        Boolean assigne = false;
+        
+        for(Colis col: colis) {
+            assigne = false;
+            for(Chariot ch: chariots) {
+                if(assigne) break;
+                if(ch.getColis().size() < config.getNbBoxesTrolley()) {
+                    ch.addColis(col);
+                    assigne = true;
+                }
+            }
+            
+            if(!assigne) {
+                Chariot newChariot = new Chariot(config.getNbBoxesTrolley());
+                newChariot.addColis(col);
+                chariots.add(newChariot);
+            }
+        }
+        
+        return chariots;
     }
     
     public static void main(String[] args) {
