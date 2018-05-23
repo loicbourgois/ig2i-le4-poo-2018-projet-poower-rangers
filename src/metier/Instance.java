@@ -57,7 +57,7 @@ public class Instance {
 	public boolean dispatch() {
 		System.out.println("dispatching");
 
-                config = new Configuration(0, boxDimensions.get(0), trolleyCount);
+                config = new Configuration(trolleyCount, boxDimensions.get(0), boxDimensions.get(1));
                 
 		//Location
 		for (ArrayList<String> l : locations) {
