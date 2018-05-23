@@ -24,18 +24,15 @@ import metier.Produit;
  */
 public class Simple {
     private Instance instance;
-    
-    // TEST VARIABLES
-    private List<Chariot> chariots;
 
     public Simple(Instance instance) {
         this.instance = instance;
     }
     
-    public void sampleSolution() {
+    public List<Chariot> sampleSolution() {
         // AJOUTER CONDITION POUR NE PAS AJOUTER 2 COMMANDES DANS UN MEME COLIS
 
-        chariots = new ArrayList<>();
+        List<Chariot> chariots = new ArrayList<>();
         
         Set<Colis> colis = null;
         
@@ -47,6 +44,8 @@ public class Simple {
         Integer indexChariot = 0;
         Integer indexColis = 0;
         
+        System.out.println(commandes.toString());
+        
         for(Commande c: commandes) {
             for(Map.Entry<Produit, Integer> entry : c.getProduitCommande().entrySet()){
                 
@@ -55,7 +54,7 @@ public class Simple {
 
                 while(qtt > 0) {
                     if(chariots.isEmpty())
-                        chariots.add(new Chariot());
+                        chariots.add(new Chariot(config.getNbBoxesTrolley()));
                         
                     for(Chariot ch: chariots) {
                         indexChariot++; indexColis = 0;
@@ -78,7 +77,7 @@ public class Simple {
                         qtt--;
                     }
                     else if(chariots.size() == indexChariot){
-                        Chariot newChariot = new Chariot();
+                        Chariot newChariot = new Chariot(config.getNbBoxesTrolley());
                         Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), c);
                         chariots.add(newChariot);
                         newChariot.addColis(newColis);
@@ -88,6 +87,8 @@ public class Simple {
                 }
             }
         }
+        System.out.println(chariots.toString());
+        return chariots;
     }
     
     private void addProduitColis(Colis co, Produit p, Integer qtt) {
@@ -100,11 +101,17 @@ public class Simple {
     public static void main(String[] args) {
         Instance instance = new Instance("./instances/instance_0116_131950_Z1.txt");
         instance.parse();
-        System.out.println(instance.toString());
+        //System.out.println(instance.toString());
         instance.dispatch();
+        
+        
         
         Simple solution = new Simple(instance);
         
-        solution.sampleSolution();
+        List<Chariot> chariots = solution.sampleSolution();
+        
+        for(Chariot ch: chariots) {
+            System.out.println(ch.toString());
+        }
     }
 }
