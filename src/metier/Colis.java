@@ -8,17 +8,48 @@ package metier;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rod
  */
+@Entity
+@Table(name="COLIS")
 public class Colis {
+    
+    @Id
+    @Column(name="COLISNO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @Column(name="POIDSRESTANT")
     private int poidsRestant;
+    
+    @Column(name="VOLUMERESTANT")
     private int volumeRestant;
+    
+    @Column(name="COMMANDE")
     private Commande commande;
+    
+    // tout doux
     private Map<Produit,Integer> produits;
+    
+    @JoinColumn(name = "CHARIOT", referencedColumnName = "CHARIOTNO")
+    @ManyToOne(optional = false)
+    private Chariot chariot;
 
     public Colis() {
         this.produits = new HashMap<Produit,Integer>();

@@ -8,23 +8,45 @@ package metier;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Aurélien Ledieu
  */
+@Entity
+@Table(name="ENTREPOT")
 public class Entrepot {
 
+        @Id
+        @Column(name="ENTREPOTNO")
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+        
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
 	private Set<Localisation> depots;
+        
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
 	private Set<Produit> produits;
+        
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
 	private Set<Commande> commandes;
+        
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
 	private Set<Chariot> chariots;
 
 	public Entrepot() {
 		depots = new HashSet<>();
 		produits = new HashSet<>();
 		commandes = new HashSet<>();
+		chariots = new HashSet<>();
 	}
 
 	public Entrepot(int id) {

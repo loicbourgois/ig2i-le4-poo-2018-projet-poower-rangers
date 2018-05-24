@@ -8,16 +8,42 @@ package metier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.Table;
 
 /**
  *
  * @author Aurélien Ledieu
  */
+@Entity
+@Table(name="LOCALISATION")
 public class Localisation {
+    @Id
+    @Column(name="LOCALISATIONNO")
     private int id;
+    
+    @Column(name="POSX")
     private int posX;
+    
+    @Column(name="POSY")
     private int posY;
+    
+    //tout doux
     private Map<Localisation,Integer> distances;
+    
+    @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+    @ManyToOne(optional = false)
+    private Entrepot entrepot;
 
     public Localisation() {
 	distances = new HashMap<>();
