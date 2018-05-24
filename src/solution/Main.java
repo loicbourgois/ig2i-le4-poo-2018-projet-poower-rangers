@@ -28,7 +28,7 @@ public class Main {
         
         Entrepot entrepot = instance.getEntrepot();
         Configuration config = instance.getConfig();
-        
+        System.out.println(instance.toString());
         chariots.addAll(solution.sampleSolution(entrepot, config));
     }
 }
