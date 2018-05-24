@@ -48,7 +48,7 @@ public class Colis {
         
         this.produits.put(p, q);
         this.poidsRestant -= poidsTotal;
-        this.poidsRestant -= volumeTotal;
+        this.volumeRestant -= volumeTotal;
         return true;
     }
 
