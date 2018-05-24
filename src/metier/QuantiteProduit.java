@@ -40,7 +40,11 @@ public class QuantiteProduit {
     @JoinColumn(name = "COLIS", referencedColumnName = "COLISNO")
     @ManyToOne(optional = false)
     private Colis colis;
-
+    
+    @JoinColumn(name = "COLIS", referencedColumnName = "COLISNO")
+    @ManyToOne(optional = false)
+    private Commande commande;
+    
     public QuantiteProduit() {
     }
 
