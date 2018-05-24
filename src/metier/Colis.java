@@ -5,11 +5,10 @@
  */
 package metier;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKey;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,15 +41,15 @@ public class Colis {
     @Column(name="COMMANDE")
     private Commande commande;
     
-    // tout doux
-    private Map<Produit,Integer> produits;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private List<QuantiteProduit> produits;
     
     @JoinColumn(name = "CHARIOT", referencedColumnName = "CHARIOTNO")
     @ManyToOne(optional = false)
     private Chariot chariot;
 
     public Colis() {
-        this.produits = new HashMap<Produit,Integer>();
+        this.produits = new ArrayList<QuantiteProduit>();
     }
     
     public Colis(int poidsRestant, int volumeRestant, Commande commande) {
@@ -77,7 +74,7 @@ public class Colis {
         if(this.poidsRestant - poidsTotal < 0) return false;
         if(this.volumeRestant - volumeTotal < 0) return false;
         
-        this.produits.put(p, q);
+        this.produits.add(new QuantiteProduit(p,q));
         this.poidsRestant -= poidsTotal;
         this.volumeRestant -= volumeTotal;
         return true;
@@ -99,8 +96,12 @@ public class Colis {
         return commande;
     }
 
-    public Map<Produit, Integer> getProduits() {
+    public List<QuantiteProduit> getProduits() {
         return produits;
+    }
+
+    public Chariot getChariot() {
+        return chariot;
     }
 
     @Override
