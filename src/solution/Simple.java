@@ -17,6 +17,7 @@ import metier.Entrepot;
 import metier.Instance;
 import metier.Localisation;
 import metier.Produit;
+import metier.QuantiteProduit;
 
 /**
  *
@@ -45,10 +46,9 @@ public class Simple {
         Integer indexColis = 0;
         
         for(Commande c: commandes) {
-            for(Map.Entry<Produit, Integer> entry : c.getProduitCommande().entrySet()){
-                
-                Produit p = entry.getKey();
-                Integer qtt = entry.getValue();
+            for(QuantiteProduit qp : c.getProduitsCommandes()) {
+                Produit p = qp.getProduit();
+                Integer qtt = qp.getQuantite();
 
                 while(qtt > 0) {
                     if(chariots.isEmpty())
