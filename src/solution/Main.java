@@ -41,12 +41,6 @@ public class Main {
 		//System.out.println(output.toString());
 		
 		// Move to test folder
-		try (PrintWriter out = new PrintWriter("./test/"+instanceName+".txt")) {
-			out.println(instance.toString());
-			System.out.println("Writing successful");
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
-		}
 		try (PrintWriter out = new PrintWriter("./test/"+instanceName+"_sol.txt")) {
 			out.println(output.toString());
 			System.out.println("Writing successful");
