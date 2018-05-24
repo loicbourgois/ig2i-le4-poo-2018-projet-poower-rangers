@@ -5,6 +5,7 @@ module.exports = {
 		'.git',
 		'.travis.yml',
 		'build',
+		'build.xml',
 		'ig2i-le4-poo-2018-tp4.pdf',
 		'db_routage_with_data.sql',
 		'db_scripts_instances.zip',
@@ -16,10 +17,13 @@ module.exports = {
 		'nbproject',
 		'solutions',
 		'src',
-		'test'
+		'test',
+		'dist/poowerrangers.jar',
+		'dist/README.TXT'
 	],
 	ignoreExtensions: [
 		'zip',
-		'pdf'
+		'pdf',
+		'jar'
 	]
 };
