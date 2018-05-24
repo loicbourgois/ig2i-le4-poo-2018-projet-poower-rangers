@@ -8,15 +8,43 @@ package metier;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Aurélien Ledieu
  */
+@Entity
+@Table(name="CHARIOT")
 public class Chariot {
+    
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Column(name="CHARIOTNO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @Column(name="CAPAMAX")
     private final int capaMax;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chariot")
     private Set<Colis> colis;
+    
+    @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+    @ManyToOne(optional = false)
+    private Entrepot entrepot;
 
     public Chariot(int capaMax) {
         this.capaMax = capaMax;

@@ -34,19 +34,12 @@ public class Output {
 		this.roundCount = 0;
 	}
 
-	public Output(String inputFilename, List<Chariot> chariots) {
-		this.roundCount = chariots.size();
-		this.chariots = chariots;
-		this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
-		System.out.println(this.filename);
-	}
-
-	public String toString() {
-		if (!strGenerated) {
-			this.generateStr2();
-		}
-		return this.str;
-	}
+    public Output(String inputFilename, List<Chariot> chariots) {
+        this.roundCount = chariots.size();
+        this.chariots = chariots;
+        this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
+        System.out.println(this.filename);
+    }
 
 	private void generateStr() {
 		this.str = "";
@@ -97,23 +90,30 @@ public class Output {
 		}
 	}
 
-	private int getRand(int min, int max) {
-		return ThreadLocalRandom.current().nextInt(min, max + 1);
-	}
+    public String toString() {
+        if (!strGenerated) {
+            this.generateStr2();
+        }
+        return this.str;
+    }
 
-	public void writeToFile() {
-		try (PrintWriter out = new PrintWriter(this.filename)) {
-			out.println(this.toString());
-			System.out.println("Writing successful");
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+    private int getRand(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
 
-	public static void main(String[] args) {
-		System.out.println("Output");
-		Output output = new Output();
-		/*output.roundCount = 2;
+    public void writeToFile() {
+        try (PrintWriter out = new PrintWriter(this.filename)) {
+            out.println(this.toString());
+            System.out.println("Writing successful");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Output");
+        Output output = new Output();
+        /*output.roundCount = 2;
 		output.colisCount = 6;
 		output.rounds = new ArrayList<>();
 		for (int i = 0; i < output.roundCount; i++) {
@@ -128,8 +128,8 @@ public class Output {
 				}
 			}
 		}*/
-		System.out.println(output.toString());
-		//output.filename = "./solutions/test_sol.txt";
-		//output.writeToFile();
-	}
+        System.out.println(output.toString());
+        //output.filename = "./solutions/test_sol.txt";
+        //output.writeToFile();
+    }
 }
