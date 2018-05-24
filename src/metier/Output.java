@@ -29,7 +29,7 @@ public class Output {
 	private ArrayList<ArrayList<ArrayList<Integer>>> rounds;
 	private String filename;
 	private List<Chariot> chariots;
-	
+
 	public Output() {
 		this.roundCount = 0;
 	}
@@ -67,7 +67,7 @@ public class Output {
 			}
 		}
 	}
-	
+
 	private void generateStr2() {
 		this.str = "";
 		this.str = this.str.concat("//NbTournees" + "\n");
@@ -78,11 +78,10 @@ public class Output {
 			this.str = this.str.concat("//IdTournes NbColis" + "\n");
 			this.str = this.str.concat((i + 1) + " " + colis.size() + "\n");
 			this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
-			
-			
+
 			List colisList = colis.stream().collect(toList());
-			
-			for (int j = 0; j < colisList.size() ; j++) {
+
+			for (int j = 0; j < colisList.size(); j++) {
 				Colis colisUnit = (Colis) colisList.get(j);
 				Map<Produit, Integer> produits = colisUnit.getProduits();
 				this.str = this.str.concat(idPackage + " " + colisUnit.getCommande().getId() + " " + produits.size());
@@ -94,8 +93,7 @@ public class Output {
 				this.str = this.str.concat("\n");
 				idPackage++;
 			}
-			
-			
+
 		}
 	}
 
