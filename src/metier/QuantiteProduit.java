@@ -49,6 +49,14 @@ public class QuantiteProduit {
         this.quantite = quantite;
     }
 
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public Integer getQuantite() {
+        return quantite;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
