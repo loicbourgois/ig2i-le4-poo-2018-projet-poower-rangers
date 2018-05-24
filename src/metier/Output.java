@@ -8,9 +8,13 @@ package metier;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
 
 /**
  *
@@ -18,62 +22,105 @@ import java.util.logging.Logger;
  */
 public class Output {
 
-	private int roundCount;
-	private int colisCount;
-	private String str;
-	private boolean strGenerated;
-	private ArrayList<ArrayList<ArrayList<Integer>>> rounds;
-	private String filename;
+    private int roundCount;
+    private int colisCount;
+    private String str;
+    private boolean strGenerated;
+    private ArrayList<ArrayList<ArrayList<Integer>>> rounds;
+    private String filename;
+    private List<Chariot> chariots;
 
-	public Output() {
-		this.roundCount = 0;
-	}
+    public Output() {
+        this.roundCount = 0;
+    }
 
-        @Override
-	public String toString() {
-		if (!strGenerated) {
-			this.generateStr();
-		}
-		return this.str;
-	}
+    public Output(String inputFilename, List<Chariot> chariots) {
+        this.roundCount = chariots.size();
+        this.chariots = chariots;
+        this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
+        System.out.println(this.filename);
+    }
 
-	private void generateStr() {
-		this.str = "";
-		this.str = this.str.concat("//NbTournees" + "\n");
-		this.str = this.str.concat(this.roundCount + "\n");
-		int idPackage = 1;
-		for (int i = 0; i < this.roundCount; i++) {
-			this.str = this.str.concat("//IdTournes NbColis" + "\n");
-			this.str = this.str.concat((i + 1) + " " + rounds.get(i).size() + "\n");
-			this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
-			for (int j = 0; j < rounds.get(i).size(); j++) {
-				this.str = this.str.concat(idPackage + " " + "0" + " " + rounds.get(i).get(j).size() / 2);
-				for (int k = 0; k < rounds.get(i).get(j).size(); k++) {
-					this.str = this.str.concat(" " + Integer.toString(rounds.get(i).get(j).get(k)));
-				}
-				this.str = this.str.concat("\n");
-				idPackage++;
-			}
-		}
-	}
+    public String toString() {
+        if (!strGenerated) {
+            this.generateStr2();
+        }
+        return this.str;
+    }
 
-	private int getRand(int min, int max) {
-		return ThreadLocalRandom.current().nextInt(min, max + 1);
-	}
+    private void generateStr() {
+        this.str = "";
+        this.str = this.str.concat("//NbTournees" + "\n");
+        this.str = this.str.concat(this.roundCount + "\n");
+        int idPackage = 1;
+        for (int i = 0; i < this.roundCount; i++) {
+            this.str = this.str.concat("//IdTournes NbColis" + "\n");
+            this.str = this.str.concat((i + 1) + " " + rounds.get(i).size() + "\n");
+            this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
+            for (int j = 0; j < rounds.get(i).size(); j++) {
+                this.str = this.str.concat(idPackage + " " + "0" + " " + rounds.get(i).get(j).size() / 2);
+                for (int k = 0; k < rounds.get(i).get(j).size(); k++) {
+                    this.str = this.str.concat(" " + Integer.toString(rounds.get(i).get(j).get(k)));
+                }
+                this.str = this.str.concat("\n");
+                idPackage++;
+            }
+        }
+    }
 
-	private void writeToFile() {
-		try (PrintWriter out = new PrintWriter(this.filename)) {
-			out.println(this.toString());
-			System.out.println("Writing successful");
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+    private void generateStr2() {
+        this.str = "";
+        this.str = this.str.concat("//NbTournees" + "\n");
+        this.str = this.str.concat(this.roundCount + "\n");
+        int idPackage = 1;
+        for (int i = 0; i < this.roundCount; i++) {
+            Set<Colis> colis = chariots.get(i).getColis();
+            this.str = this.str.concat("//IdTournes NbColis" + "\n");
+            this.str = this.str.concat((i + 1) + " " + colis.size() + "\n");
+            this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
 
-	public static void main(String[] args) {
-		System.out.println("Output");
-		Output output = new Output();
-		output.roundCount = 2;
+            List colisList = colis.stream().collect(toList());
+
+            for (int j = 0; j < colisList.size(); j++) {
+                Colis colisUnit = (Colis) colisList.get(j);
+                
+                List<Produit> produits = new ArrayList<>();
+                
+                List<QuantiteProduit> qttProduits = new ArrayList<>();
+                
+                //QuantiteProduit qttProduit = new QuantiteProduit(colisUnit.getProduits(),0);
+                
+                
+                this.str = this.str.concat(idPackage + " " + colisUnit.getCommande().getId() + " " + produits.size());
+                for (QuantiteProduit qp : qttProduits){
+                    Integer id =qp.getId();
+                    Integer quantity = qp.getQuantite();
+                    this.str = this.str.concat(" " + id + " " + quantity);
+                }
+                this.str = this.str.concat("\n");
+                idPackage++;
+            }
+
+        }
+    }
+
+    private int getRand(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
+
+    public void writeToFile() {
+        try (PrintWriter out = new PrintWriter(this.filename)) {
+            out.println(this.toString());
+            System.out.println("Writing successful");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Output");
+        Output output = new Output();
+        /*output.roundCount = 2;
 		output.colisCount = 6;
 		output.rounds = new ArrayList<>();
 		for (int i = 0; i < output.roundCount; i++) {
@@ -87,9 +134,9 @@ public class Output {
 					idProd += output.getRand(1, 2);
 				}
 			}
-		}
-		System.out.println(output.toString());
-		output.filename = "./solutions/test_sol.txt";
-		output.writeToFile();
-	}
+		}*/
+        System.out.println(output.toString());
+        //output.filename = "./solutions/test_sol.txt";
+        //output.writeToFile();
+    }
 }

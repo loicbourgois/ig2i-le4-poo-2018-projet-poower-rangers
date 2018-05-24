@@ -125,4 +125,8 @@ public class Commande {
 						// + ", nbColis=" + nbColis 
 						+ "\t\t}\n";*/
 	}
+
+	Integer getId() {
+		return this.id;
+	}
 }

@@ -57,6 +57,12 @@ public class QuantiteProduit {
         return quantite;
     }
 
+    public Integer getId() {
+        return id;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 3;
