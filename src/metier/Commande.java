@@ -8,16 +8,30 @@ package metier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rod
  */
+@Entity
+@Table(name="COMMANDE")
 public class Commande {
 
+    //tout doux
 	private Map<Produit, Integer> produitsCommandes;
+        
+    //tout doux
 	private Map<Produit, Integer> produitsRestants;
+        
+        @Id
+        @Column(name="COMMANDENO")
 	private int id;
+        
+        @Column(name="NBCOLIS")
 	private int nbColis;
 
 	public Commande() {
