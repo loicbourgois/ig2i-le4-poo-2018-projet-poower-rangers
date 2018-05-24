@@ -16,6 +16,7 @@ import metier.Configuration;
 import metier.Entrepot;
 import metier.Instance;
 import metier.Produit;
+import metier.QuantiteProduit;
 
 /**
  *
@@ -50,9 +51,9 @@ public class Sample {
         
         Boolean assigne = false;
         
-        for(Map.Entry<Produit, Integer> entry : c.getProduitCommande().entrySet()) {
-            Produit p = entry.getKey();
-            Integer qtt = entry.getValue();
+        for(QuantiteProduit qp : c.getProduitsCommandes()) {
+            Produit p = qp.getProduit();
+            Integer qtt = qp.getQuantite();
             
             for(Integer i=0;i<qtt;i++) {
                 assigne = false;
