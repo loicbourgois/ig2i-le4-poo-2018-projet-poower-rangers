@@ -79,7 +79,7 @@ public class Output {
 				ArrayList<QuantiteProduit> produits = (ArrayList<QuantiteProduit>) colisUnit.getProduits();
 				this.str = this.str.concat(idPackage + " " + colisUnit.getCommande().getId() + " " + produits.size());
 				for (int k = 0; k < produits.size(); k++) {
-					Integer id = produits.get(k).getId();
+					Integer id = produits.get(k).getProduit().getId();
 					Integer quantity = produits.get(k).getQuantite();
 					this.str = this.str.concat(" " + id + " " + quantity);
 				}

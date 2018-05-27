@@ -34,14 +34,12 @@ public class Main {
 		instance.dispatch();
 		Sample solution = new Sample(instance);
 		solution.populateChariots();
-
 		Output output = new Output(fileName, solution.getChariots());
 		output.writeToFile();
 
 		// Move to test folder
 		try (PrintWriter out = new PrintWriter("./test/" + instanceName + "_sol.txt")) {
 			out.println(output.toString());
-			System.out.println("Writing successful in main");
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
 		}
