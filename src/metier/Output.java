@@ -41,13 +41,6 @@ public class Output {
 		System.out.println(this.filename);
 	}
 
-	public String toString() {
-		if (!strGenerated) {
-			this.generateStr2();
-		}
-		return this.str;
-	}
-
 	private void generateStr() {
 		this.str = "";
 		this.str = this.str.concat("//NbTournees" + "\n");
@@ -83,11 +76,11 @@ public class Output {
 
 			for (int j = 0; j < colisList.size(); j++) {
 				Colis colisUnit = (Colis) colisList.get(j);
-				Map<Produit, Integer> produits = colisUnit.getProduits();
+				ArrayList<QuantiteProduit> produits = (ArrayList<QuantiteProduit>) colisUnit.getProduits();
 				this.str = this.str.concat(idPackage + " " + colisUnit.getCommande().getId() + " " + produits.size());
-				for (Map.Entry<Produit, Integer> entry : produits.entrySet()) {
-					Integer id = entry.getKey().getId();
-					Integer quantity = entry.getValue();
+				for (int k = 0; k < produits.size(); k++) {
+					Integer id = produits.get(k).getId();
+					Integer quantity = produits.get(k).getQuantite();
 					this.str = this.str.concat(" " + id + " " + quantity);
 				}
 				this.str = this.str.concat("\n");
@@ -95,6 +88,13 @@ public class Output {
 			}
 
 		}
+	}
+
+	public String toString() {
+		if (!strGenerated) {
+			this.generateStr2();
+		}
+		return this.str;
 	}
 
 	private int getRand(int min, int max) {
