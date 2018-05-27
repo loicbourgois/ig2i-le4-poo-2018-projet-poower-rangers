@@ -34,12 +34,12 @@ public class Output {
 		this.roundCount = 0;
 	}
 
-    public Output(String inputFilename, List<Chariot> chariots) {
-        this.roundCount = chariots.size();
-        this.chariots = chariots;
-        this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
-        System.out.println(this.filename);
-    }
+	public Output(String inputFilename, List<Chariot> chariots) {
+		this.roundCount = chariots.size();
+		this.chariots = chariots;
+		this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
+		System.out.println(this.filename);
+	}
 
 	private void generateStr() {
 		this.str = "";
@@ -76,11 +76,11 @@ public class Output {
 
 			for (int j = 0; j < colisList.size(); j++) {
 				Colis colisUnit = (Colis) colisList.get(j);
-				Map<Produit, Integer> produits = colisUnit.getProduits();
+				ArrayList<QuantiteProduit> produits = (ArrayList<QuantiteProduit>) colisUnit.getProduits();
 				this.str = this.str.concat(idPackage + " " + colisUnit.getCommande().getId() + " " + produits.size());
-				for (Map.Entry<Produit, Integer> entry : produits.entrySet()) {
-					Integer id = entry.getKey().getId();
-					Integer quantity = entry.getValue();
+				for (int k = 0; k < produits.size(); k++) {
+					Integer id = produits.get(k).getId();
+					Integer quantity = produits.get(k).getQuantite();
 					this.str = this.str.concat(" " + id + " " + quantity);
 				}
 				this.str = this.str.concat("\n");
@@ -90,30 +90,30 @@ public class Output {
 		}
 	}
 
-    public String toString() {
-        if (!strGenerated) {
-            this.generateStr2();
-        }
-        return this.str;
-    }
+	public String toString() {
+		if (!strGenerated) {
+			this.generateStr2();
+		}
+		return this.str;
+	}
 
-    private int getRand(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max + 1);
-    }
+	private int getRand(int min, int max) {
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
+	}
 
-    public void writeToFile() {
-        try (PrintWriter out = new PrintWriter(this.filename)) {
-            out.println(this.toString());
-            System.out.println("Writing successful");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public void writeToFile() {
+		try (PrintWriter out = new PrintWriter(this.filename)) {
+			out.println(this.toString());
+			System.out.println("Writing successful");
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
-    public static void main(String[] args) {
-        System.out.println("Output");
-        Output output = new Output();
-        /*output.roundCount = 2;
+	public static void main(String[] args) {
+		System.out.println("Output");
+		Output output = new Output();
+		/*output.roundCount = 2;
 		output.colisCount = 6;
 		output.rounds = new ArrayList<>();
 		for (int i = 0; i < output.roundCount; i++) {
@@ -128,8 +128,8 @@ public class Output {
 				}
 			}
 		}*/
-        System.out.println(output.toString());
-        //output.filename = "./solutions/test_sol.txt";
-        //output.writeToFile();
-    }
+		System.out.println(output.toString());
+		//output.filename = "./solutions/test_sol.txt";
+		//output.writeToFile();
+	}
 }
