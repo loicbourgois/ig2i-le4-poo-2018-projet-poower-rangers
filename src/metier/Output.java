@@ -104,7 +104,7 @@ public class Output {
 	public void writeToFile() {
 		try (PrintWriter out = new PrintWriter(this.filename)) {
 			out.println(this.toString());
-			System.out.println("Writing successful");
+			// System.out.println("Writing successful");
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
 		}

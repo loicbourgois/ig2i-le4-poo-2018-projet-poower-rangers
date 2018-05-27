@@ -55,7 +55,7 @@ public class Instance {
 	}
 
 	public boolean dispatch() {
-		System.out.println("dispatching");
+		// System.out.println("dispatching");
 
 		config = new Configuration(trolleyCount, boxDimensions.get(0), boxDimensions.get(1));
 
@@ -144,7 +144,7 @@ public class Instance {
 	}
 
 	public boolean parse() {
-		System.out.println("parsing");
+		// System.out.println("parsing");
 		try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
 			String line;
 			while ((line = br.readLine()) != null) {
