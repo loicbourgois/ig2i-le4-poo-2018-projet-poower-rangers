@@ -38,10 +38,10 @@ public class Colis {
     @Column(name="VOLUMERESTANT")
     private int volumeRestant;
     
-    @Column(name="COMMANDE")
+    @JoinColumn(name="COMMANDE")
     private Commande commande;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colis")
     private List<QuantiteProduit> produits;
     
     @JoinColumn(name = "CHARIOT", referencedColumnName = "CHARIOTNO")
@@ -144,6 +144,4 @@ public class Colis {
     public String toString() {
         return "Colis{" + "id=" + id + ", poidsRestant=" + poidsRestant + ", volumeRestant=" + volumeRestant + ", commande=" + commande + '}'+ "\n";
     }
-    
-    
 }

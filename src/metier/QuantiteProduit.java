@@ -31,7 +31,7 @@ public class QuantiteProduit {
     @Column(name = "ID")
     private Integer id;
     
-    @Column(name="PRODUIT")
+    @JoinColumn(name="PRODUIT")
     private Produit produit;
     
     @Column(name="QUANTITE")
@@ -41,7 +41,7 @@ public class QuantiteProduit {
     @ManyToOne(optional = false)
     private Colis colis;
     
-    @JoinColumn(name = "COLIS", referencedColumnName = "COLISNO")
+    @JoinColumn(name = "COMMANDE", referencedColumnName = "COMMANDENO")
     @ManyToOne(optional = false)
     private Commande commande;
     

@@ -34,7 +34,7 @@ public class Chariot {
     private int id;
     
     @Column(name="CAPAMAX")
-    private final int capaMax;
+    private int capaMax;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chariot")
     private Set<Colis> colis;
@@ -42,6 +42,9 @@ public class Chariot {
     @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
     @ManyToOne(optional = false)
     private Entrepot entrepot;
+
+    public Chariot() {
+    }
 
     public Chariot(int capaMax) {
         this.capaMax = capaMax;

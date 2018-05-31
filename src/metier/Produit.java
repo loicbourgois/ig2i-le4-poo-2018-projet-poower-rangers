@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -35,6 +36,15 @@ public class Produit {
     @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
     @ManyToOne(optional = false)
     private Entrepot entrepot;
+    
+    @JoinColumn(name = "QUANTITEPRODUIT", referencedColumnName = "ID")
+    @OneToOne
+    private QuantiteProduit quantiteProduit;
+    
+    @JoinColumn(name = "COLIS", referencedColumnName = "COLISNO")
+    @ManyToOne(optional = false)
+    private Colis colis;
+    
     
     public Produit() {
     }

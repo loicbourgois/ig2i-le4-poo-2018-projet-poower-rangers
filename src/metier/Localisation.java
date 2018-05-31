@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -35,12 +36,16 @@ public class Localisation {
     @Column(name="POSY")
     private int posY;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "localisation")
     private List<Distance> distances;
     
     @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
     @ManyToOne(optional = false)
     private Entrepot entrepot;
+    
+    @JoinColumn(name = "DISTANCE", referencedColumnName = "ID")
+    @OneToOne
+    private Distance distance;
 
     public Localisation() {
 	distances = new ArrayList<Distance>();
