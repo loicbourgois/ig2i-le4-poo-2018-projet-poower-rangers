@@ -40,11 +40,17 @@ public class Main {
 		instances.add("instance_0606_136175_Z1");
 		instances.add("instance_0606_136178_Z1");
 		
-		for(int i = 0 ; i < instances.size() ; i++) {
+		for (int i = 0; i < instances.size(); i++) {
 			System.out.println(run(instances.get(i)));
 		}
 	}
 	
+	
+	/**
+	 * Run generate a solution from an instance and launch the checker.
+	 * @param instanceName name of the instance
+	 * @return length.
+	 */
 	public static String run(String instanceName) {
 		String fileName = "./instances/" + instanceName + ".txt";
 		Instance instance = new Instance(fileName);
@@ -94,7 +100,7 @@ public class Main {
 		try {
 			while ((s = stdInput.readLine()) != null) {
 				//System.out.println(s);
-				if(s.startsWith("--> Distance totale : ")) {
+				if (s.startsWith("--> Distance totale : ")) {
 					length = s;
 					length = length.replace("--> Distance totale : ","");
 				}
