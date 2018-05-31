@@ -5,24 +5,46 @@
  */
 package metier;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rod
  */
+@Entity
+@Table(name="COMMANDE")
 public class Commande {
 
-	private Map<Produit, Integer> produitsCommandes;
-	private Map<Produit, Integer> produitsRestants;
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
+	private List<QuantiteProduit> produitsCommandes;
+        
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
+	private List<QuantiteProduit> produitsRestants;
+        
+        @Id
+        @Column(name="COMMANDENO")
 	private int id;
+
+        @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+        @ManyToOne(optional = false)
+        private Entrepot entrepot;
+
+        @Column(name="NBCOLIS")
 	private int nbColis;
 
 	public Commande() {
-		this.produitsCommandes = new HashMap<>();
-		this.produitsRestants = new HashMap<>();
+		this.produitsCommandes = new ArrayList<>();
+		this.produitsRestants = new ArrayList<>();
 	}
 
 	public Commande(int Integer, int nbColis) {
@@ -32,33 +54,33 @@ public class Commande {
 	}
 
 	public void addProduitQuantite(Produit p, Integer q) {
-		this.produitsCommandes.put(p, q);
-		this.produitsRestants.put(p, q);
+		this.produitsCommandes.add(new QuantiteProduit(p, q));
+		this.produitsRestants.add(new QuantiteProduit(p, q));
 	}
 
 	public int calculePoidsTotal() {
 		int poidsTotal = 0;
-		for (Map.Entry<Produit, Integer> item : this.produitsCommandes.entrySet()) {
-			poidsTotal += item.getKey().getPoids() * item.getValue();
+		for (QuantiteProduit qp : this.produitsCommandes) {
+			poidsTotal += qp.getProduit().getPoids() * qp.getQuantite();
 		}
 		return poidsTotal;
 	}
 
 	public int calculeVolumeTotal() {
 		int volTotal = 0;
-		for (Map.Entry<Produit, Integer> item : this.produitsCommandes.entrySet()) {
-			volTotal += item.getKey().getVolume() * item.getValue();
+		for (QuantiteProduit qp : this.produitsCommandes) {
+			volTotal += qp.getProduit().getVolume() * qp.getQuantite();
 		}
 		return volTotal;
 	}
 
-	public Map<Produit, Integer> getProduitCommande() {
-		return produitsCommandes;
-	}
+        public List<QuantiteProduit> getProduitsCommandes() {
+            return produitsCommandes;
+        }
 
-	public Map<Produit, Integer> getProduitRestant() {
-		return produitsRestants;
-	}
+        public List<QuantiteProduit> getProduitsRestants() {
+            return produitsRestants;
+        }
 
 	public int getInteger() {
 		return id;
@@ -110,5 +132,9 @@ public class Commande {
 						// + "],\n produitRestant=[" + produitsRestants 
 						// + ", nbColis=" + nbColis 
 						+ "\t\t}\n";*/
+	}
+
+	Integer getId() {
+		return this.id;
 	}
 }

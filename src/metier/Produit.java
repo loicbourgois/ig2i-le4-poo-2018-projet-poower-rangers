@@ -5,16 +5,47 @@
  */
 package metier;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author Rod
  */
+@Entity
+@Table(name="PRODUIT")
 public class Produit {
+    @Id
+    @Column(name="PRODUITNO")
     private int id;
+    
+    @Column(name="POIDS")
     private int poids;
+    
+    @Column(name="VOLUME")
     private int volume;
+    
+    @JoinColumn(name="LOCALISATION", referencedColumnName ="LOCALISATIONNO")
     private Localisation localisation;
-
+    
+    @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+    @ManyToOne(optional = false)
+    private Entrepot entrepot;
+    
+    @JoinColumn(name = "QUANTITEPRODUIT", referencedColumnName = "ID")
+    @OneToOne
+    private QuantiteProduit quantiteProduit;
+    
+    @JoinColumn(name = "COLIS", referencedColumnName = "COLISNO")
+    @ManyToOne(optional = false)
+    private Colis colis;
+    
+    
     public Produit() {
     }
 

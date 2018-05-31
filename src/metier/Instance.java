@@ -38,9 +38,9 @@ public class Instance {
 	private ArrayList<ArrayList<Integer>> arcs;
 	private ArrayList<ArrayList<Integer>> shortestPath;
 	private ArrayList<ArrayList<String>> locations;
-        ArrayList allLocation = new ArrayList<Localisation>();
-        ArrayList allProducts = new ArrayList<Produit>();
-        ArrayList allOrders = new ArrayList<Commande>();
+	ArrayList allLocation = new ArrayList<>();
+	ArrayList allProducts = new ArrayList<>();
+	ArrayList allOrders = new ArrayList<>();
 	private static boolean DEBUG = false;
 
 	public Instance() {
@@ -55,10 +55,10 @@ public class Instance {
 	}
 
 	public boolean dispatch() {
-		System.out.println("dispatching");
+		// System.out.println("dispatching");
 
-                config = new Configuration(trolleyCount, boxDimensions.get(0), boxDimensions.get(1));
-                
+		config = new Configuration(trolleyCount, boxDimensions.get(0), boxDimensions.get(1));
+
 		//Location
 		for (ArrayList<String> l : locations) {
 			Localisation loc = new Localisation(Integer.parseInt(l.get(0)), Integer.parseInt(l.get(1)), Integer.parseInt(l.get(2)));
@@ -92,12 +92,12 @@ public class Instance {
 				}
 			}
 			allOrders.add(c);
-                        entrepot.addCommande(c);
+			entrepot.addCommande(c);
 			if (DEBUG) {
 				System.out.println(c);
 			}
 		}
-                
+
 		return true;
 	}
 
@@ -144,7 +144,7 @@ public class Instance {
 	}
 
 	public boolean parse() {
-		System.out.println("parsing");
+		// System.out.println("parsing");
 		try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
 			String line;
 			while ((line = br.readLine()) != null) {
