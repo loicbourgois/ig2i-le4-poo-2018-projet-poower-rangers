@@ -41,11 +41,11 @@ public class Main {
 		instances.add("instance_0606_136178_Z1");
 		
 		for(int i = 0 ; i < instances.size() ; i++) {
-			run(instances.get(i));
+			System.out.println(run(instances.get(i)));
 		}
 	}
 	
-	public static void run(String instanceName) {
+	public static String run(String instanceName) {
 		String fileName = "./instances/" + instanceName + ".txt";
 		Instance instance = new Instance(fileName);
 		instance.parse();
@@ -63,7 +63,7 @@ public class Main {
 		}
 
 		// Run checker
-		execCmd("cd ./test ; java -jar CheckerBatchingPicking.jar "
+		return execCmd("cd ./test ; java -jar CheckerBatchingPicking.jar "
 						+ instanceName
 						+ " ; cd ../");
 	}
@@ -72,7 +72,7 @@ public class Main {
 	 * Executes an external command.
 	 * @param cmd command to execute
 	 */
-	public static void execCmd(String cmd) {
+	public static String execCmd(String cmd) {
 
 		Runtime rt = Runtime.getRuntime();
 		String[] commands = {"/bin/bash", "-c", cmd};
@@ -90,9 +90,14 @@ public class Main {
 		// read the output from the command
 		// System.out.println("Here is the standard output of the command:\n");
 		String s = null;
+		String length = "";
 		try {
 			while ((s = stdInput.readLine()) != null) {
-				System.out.println(s);
+				//System.out.println(s);
+				if(s.startsWith("--> Distance totale : ")) {
+					length = s;
+					length = length.replace("--> Distance totale : ","");
+				}
 			}
 		} catch (IOException ex) {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,5 +112,6 @@ public class Main {
 		} catch (IOException ex) {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return length;
 	}
 }
