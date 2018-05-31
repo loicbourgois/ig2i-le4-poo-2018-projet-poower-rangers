@@ -40,6 +40,7 @@ module.exports = {
 	ignoreExtensions: [
 		'zip',
 		'pdf',
-		'jar'
+		'jar',
+		'java'
 	]
 };
