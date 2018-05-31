@@ -32,7 +32,7 @@ module.exports = {
 		'dist',
 		'instances',
 		'LICENSE',
-		'node_modules
+		'node_modules',
 		'package-lock.json',
 		'README.md',
 		'src'
