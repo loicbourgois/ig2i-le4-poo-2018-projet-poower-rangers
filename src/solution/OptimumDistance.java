@@ -56,9 +56,10 @@ public class OptimumDistance {
             produitsCommandes.add(qp.getProduit());
         }
         
-        for (QuantiteProduit qp : c.getProduitsCommandes()) {
-            Produit p = qp.getProduit();
-            Integer qtt = qp.getQuantite();
+        insertionSort(produitsCommandes);
+        
+        for (Produit p : produitsCommandes) {
+            Integer qtt = c.getQttProd(p);
 
             for (Integer i = 0; i < qtt; i++) {
                 assigne = false;
