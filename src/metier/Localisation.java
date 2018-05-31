@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package metier;
 
 import java.util.ArrayList;
@@ -20,105 +21,123 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
+ * Position dans l'entrepot, trié par id.
  *
  * @author Aurélien Ledieu
  */
 @Entity
-@Table(name="LOCALISATION")
+@Table(name = "LOCALISATION")
 public class Localisation {
-    @Id
-    @Column(name="LOCALISATIONNO")
-    private int id;
-    
-    @Column(name="POSX")
-    private int posX;
-    
-    @Column(name="POSY")
-    private int posY;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "localisation")
-    private List<Distance> distances;
-    
-    @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
-    @ManyToOne(optional = false)
-    private Entrepot entrepot;
-    
-    @JoinColumn(name = "DISTANCE", referencedColumnName = "ID")
-    @OneToOne
-    private Distance distance;
 
-    public Localisation() {
-	distances = new ArrayList<Distance>();
-    }
+	@Id
+	@Column(name = "LOCALISATIONNO")
+	private int id;
 
-    public Localisation(int id, int posX, int posY) {
-	this();
-	this.id = id;
-	this.posX = posX;
-	this.posY = posY;
-    }
+	@Column(name = "POSX")
+	private int posX;
 
-    public int getId() {
-	return id;
-    }
+	@Column(name = "POSY")
+	private int posY;
 
-    public int getPosX() {
-	return posX;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "localisation")
+	private List<Distance> distances;
 
-    public int getPosY() {
-	return posY;
-    }
+	@JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+	@ManyToOne(optional = false)
+	private Entrepot entrepot;
 
-    public List<Distance> getDistances() {
-        return distances;
-    }
+	@JoinColumn(name = "DISTANCE", referencedColumnName = "ID")
+	@OneToOne
+	private Distance distance;
 
-    public Entrepot getEntrepot() {
-        return entrepot;
-    }
-
-    public boolean addDistance(Localisation localisation, Integer distance){
-	if(distances.contains(localisation)) return false;
-	return (distances.add(new Distance(localisation, distance)));
-    }
-    
-
-    @Override
-    public int hashCode() {
-	int hash = 3;
-	return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
+	/**
+	 * Default constructor.
+	 */
+	public Localisation() {
+		distances = new ArrayList<>();
 	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	final Localisation other = (Localisation) obj;
-	if (this.id != other.id) {
-	    return false;
-	}
-	if (this.posX != other.posX) {
-	    return false;
-	}
-	if (this.posY != other.posY) {
-	    return false;
-	}
-	if (!Objects.equals(this.distances, other.distances)) {
-	    return false;
-	}
-	return true;
-    }
 
-    @Override
-    public String toString() {
-	return "Localisation{" + "id=" + id + ", posX=" + posX + ", posY=" + posY  + '}' + "\n";
-    }
+	/**
+	 * Constructor.
+	 * @param id id
+	 * @param posX x
+	 * @param posY y
+	 */
+	public Localisation(int id, int posX, int posY) {
+		this();
+		this.id = id;
+		this.posX = posX;
+		this.posY = posY;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public List<Distance> getDistances() {
+		return distances;
+	}
+
+	public Entrepot getEntrepot() {
+		return entrepot;
+	}
+
+	/**
+	 * Add a localisation if it has not been added yet.
+	 * @param localisation localisation to add
+	 * @param distance distance
+	 * @return 
+	 */
+	public boolean addDistance(Localisation localisation, Integer distance) {
+		if (distances.contains(localisation)) {
+			return false;
+		}
+		return (distances.add(new Distance(localisation, distance)));
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Localisation other = (Localisation) obj;
+		if (this.id != other.id) {
+			return false;
+		}
+		if (this.posX != other.posX) {
+			return false;
+		}
+		if (this.posY != other.posY) {
+			return false;
+		}
+		if (!Objects.equals(this.distances, other.distances)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Localisation{" + "id=" + id + ", posX=" + posX + ", posY=" + posY + '}' + "\n";
+	}
 }
