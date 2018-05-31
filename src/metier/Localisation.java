@@ -5,22 +5,45 @@
  */
 package metier;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Aurélien Ledieu
  */
+@Entity
+@Table(name="LOCALISATION")
 public class Localisation {
+    @Id
+    @Column(name="LOCALISATIONNO")
     private int id;
+    
+    @Column(name="POSX")
     private int posX;
+    
+    @Column(name="POSY")
     private int posY;
-    private Map<Localisation,Integer> distances;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private List<Distance> distances;
+    
+    @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+    @ManyToOne(optional = false)
+    private Entrepot entrepot;
 
     public Localisation() {
-	distances = new HashMap<>();
+	distances = new ArrayList<Distance>();
     }
 
     public Localisation(int id, int posX, int posY) {
@@ -42,14 +65,19 @@ public class Localisation {
 	return posY;
     }
 
-    public Map<Localisation, Integer> getDistances() {
-	return distances;
+    public List<Distance> getDistances() {
+        return distances;
+    }
+
+    public Entrepot getEntrepot() {
+        return entrepot;
+    }
+
+    public boolean addDistance(Localisation localisation, Integer distance){
+	if(distances.contains(localisation)) return false;
+	return (distances.add(new Distance(localisation, distance)));
     }
     
-    public boolean addDistance(Localisation localisation, Integer distance){
-	if(distances.containsKey(localisation)) return false;
-	return (distances.put(localisation, distance)) == null;
-    }
 
     @Override
     public int hashCode() {

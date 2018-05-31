@@ -29,7 +29,7 @@ public class Output {
 	private ArrayList<ArrayList<ArrayList<Integer>>> rounds;
 	private String filename;
 	private List<Chariot> chariots;
-	
+
 	public Output() {
 		this.roundCount = 0;
 	}
@@ -39,13 +39,6 @@ public class Output {
 		this.chariots = chariots;
 		this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
 		System.out.println(this.filename);
-	}
-
-	public String toString() {
-		if (!strGenerated) {
-			this.generateStr2();
-		}
-		return this.str;
 	}
 
 	private void generateStr() {
@@ -67,7 +60,7 @@ public class Output {
 			}
 		}
 	}
-	
+
 	private void generateStr2() {
 		this.str = "";
 		this.str = this.str.concat("//NbTournees" + "\n");
@@ -78,25 +71,30 @@ public class Output {
 			this.str = this.str.concat("//IdTournes NbColis" + "\n");
 			this.str = this.str.concat((i + 1) + " " + colis.size() + "\n");
 			this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
-			
-			
+
 			List colisList = colis.stream().collect(toList());
-			
-			for (int j = 0; j < colisList.size() ; j++) {
+
+			for (int j = 0; j < colisList.size(); j++) {
 				Colis colisUnit = (Colis) colisList.get(j);
-				Map<Produit, Integer> produits = colisUnit.getProduits();
+				ArrayList<QuantiteProduit> produits = (ArrayList<QuantiteProduit>) colisUnit.getProduits();
 				this.str = this.str.concat(idPackage + " " + colisUnit.getCommande().getId() + " " + produits.size());
-				for (Map.Entry<Produit, Integer> entry : produits.entrySet()) {
-					Integer id = entry.getKey().getId();
-					Integer quantity = entry.getValue();
+				for (int k = 0; k < produits.size(); k++) {
+					Integer id = produits.get(k).getProduit().getId();
+					Integer quantity = produits.get(k).getQuantite();
 					this.str = this.str.concat(" " + id + " " + quantity);
 				}
 				this.str = this.str.concat("\n");
 				idPackage++;
 			}
-			
-			
+
 		}
+	}
+
+	public String toString() {
+		if (!strGenerated) {
+			this.generateStr2();
+		}
+		return this.str;
 	}
 
 	private int getRand(int min, int max) {
@@ -106,7 +104,7 @@ public class Output {
 	public void writeToFile() {
 		try (PrintWriter out = new PrintWriter(this.filename)) {
 			out.println(this.toString());
-			System.out.println("Writing successful");
+			// System.out.println("Writing successful");
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(Output.class.getName()).log(Level.SEVERE, null, ex);
 		}
