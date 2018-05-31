@@ -8,9 +8,13 @@ package metier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,16 +25,20 @@ import javax.persistence.Table;
 @Table(name="COMMANDE")
 public class Commande {
 
-    //tout doux
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
 	private List<QuantiteProduit> produitsCommandes;
         
-    //tout doux
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
 	private List<QuantiteProduit> produitsRestants;
         
         @Id
         @Column(name="COMMANDENO")
 	private int id;
-        
+
+        @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+        @ManyToOne(optional = false)
+        private Entrepot entrepot;
+
         @Column(name="NBCOLIS")
 	private int nbColis;
 

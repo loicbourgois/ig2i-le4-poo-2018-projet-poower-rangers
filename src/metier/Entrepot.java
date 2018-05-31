@@ -30,16 +30,16 @@ public class Entrepot {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
         
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Localisation> depots;
         
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Produit> produits;
         
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Commande> commandes;
         
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Chariot> chariots;
 
 	public Entrepot() {

@@ -9,11 +9,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +34,7 @@ public class Chariot {
     private int id;
     
     @Column(name="CAPAMAX")
-    private final int capaMax;
+    private int capaMax;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chariot")
     private Set<Colis> colis;
@@ -45,6 +42,9 @@ public class Chariot {
     @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
     @ManyToOne(optional = false)
     private Entrepot entrepot;
+
+    public Chariot() {
+    }
 
     public Chariot(int capaMax) {
         this.capaMax = capaMax;

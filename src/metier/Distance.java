@@ -30,7 +30,7 @@ public class Distance {
     @Column(name = "ID")
     private Integer id;
     
-    @Column(name="ARRIVEE")
+    @JoinColumn(name="ARRIVEE")
     private Localisation arrivee;
     
     @Column(name="DISTANCE")
