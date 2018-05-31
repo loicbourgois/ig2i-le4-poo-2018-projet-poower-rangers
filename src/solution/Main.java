@@ -30,14 +30,14 @@ public class Main {
 	public static void main(String[] args) {
 		ArrayList<String> instances = new ArrayList<>();
 		instances.add("instance_0116_131940_Z2");
-		instances.add("instance_0130_132439_Z2");
-		instances.add("instance_0203_132623_Z1");
-		instances.add("instance_0215_132916_Z2");
-		instances.add("instance_0606_136175_Z1");
 		instances.add("instance_0116_131950_Z1");
+		instances.add("instance_0130_132439_Z2");
 		instances.add("instance_0202_132568_Z2");
+		instances.add("instance_0203_132623_Z1");
 		instances.add("instance_0214_132873_Z2");
+		instances.add("instance_0215_132916_Z2");
 		instances.add("instance_0606_136170_Z1");
+		instances.add("instance_0606_136175_Z1");
 		instances.add("instance_0606_136178_Z1");
 		
 		for(int i = 0 ; i < instances.size() ; i++) {
