@@ -214,6 +214,11 @@ public class OptimumDistance {
 		return colis;
 	}
         
+        /**
+	 * Average of localisation.
+	 * @param colis colis
+	 * @return int average
+	 */
         public int averageLocalisation(Colis colis) {
             int average = 0;
             int compt = 0;
