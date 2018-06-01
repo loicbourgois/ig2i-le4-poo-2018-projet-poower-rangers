@@ -59,7 +59,8 @@ public class OptimumDistance {
         insertionSort(produitsCommandes);
         
         for (Produit p : produitsCommandes) {
-            Integer qtt = c.getQttProd(p);
+            // TODO: Si 80% remplis passer au suivant et ne pas mettre produit trop loin id > à +5/+10/+15?
+            Integer qtt = c.getQttProduit(p);
 
             for (Integer i = 0; i < qtt; i++) {
                 assigne = false;
