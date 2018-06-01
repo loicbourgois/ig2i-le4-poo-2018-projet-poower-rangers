@@ -16,6 +16,7 @@ import metier.Configuration;
 import metier.Entrepot;
 import metier.Instance;
 import metier.Produit;
+import metier.QuantiteProduit;
 
 /**
  *
@@ -47,7 +48,42 @@ public class OptimumDistance {
         List<Colis> colis = new ArrayList<>();
         List<Produit> produitsCommandes = new ArrayList<>();
         
+        colis.add(new Colis(config.getPoidsMax(), config.getValueMax(), c));
         
+        Boolean assigne = false;
+        
+        for (QuantiteProduit qp : c.getProduitsCommandes()) {
+            produitsCommandes.add(qp.getProduit());
+        }
+        
+        insertionSort(produitsCommandes);
+        
+        for (Produit p : produitsCommandes) {
+            // TODO: Si 80% remplis passer au suivant et ne pas mettre produit trop loin id > à +5/+10/+15?
+            Integer qtt = c.getQttProduit(p);
+
+            for (Integer i = 0; i < qtt; i++) {
+                assigne = false;
+
+                // Parcourt des colis existants
+                for (Colis col : colis) {
+                    if (assigne) {
+                        break; // Si assigné, on sort
+                    }
+                    if (col.getPoidsRestant() >= p.getPoids() && col.getVolumeRestant() >= p.getVolume()) { // S'il passe dans un colis on assigne
+                        col.addProduitQuantite(p, 1);
+                        assigne = true;
+                    }
+                }
+
+                // Aucun colis libre, création d'un nouveau
+                if (!assigne) {
+                    Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), c);
+                    newColis.addProduitQuantite(p, 1);
+                    colis.add(newColis);
+                }
+            }
+        }
         
         return colis;
     }
@@ -73,5 +109,26 @@ public class OptimumDistance {
         }
         
         return chariots;
+    }
+    
+    public List<Produit> insertionSort(List<Produit> produits) {
+        
+        Produit produit = new Produit();
+        int i = 1;
+        
+        while(i < produits.size()) {
+            produit = produits.get(i);
+            int j = i - 1;
+            int k = i;
+            while(j >= 0 && produits.get(j).getId() > produit.getId()) {
+                k = j + 1;
+                produits.set(k, produits.get(j));
+                j--;
+            }
+            produits.set(k, produit);
+            i++;
+        }
+        
+        return produits;
     }
 }
