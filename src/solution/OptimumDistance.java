@@ -26,6 +26,7 @@ import metier.QuantiteProduit;
 public class OptimumDistance {
 
 	private Instance instance;
+	public List<Chariot> chariots;
 
 	public OptimumDistance(Instance instance) {
 		this.instance = instance;
@@ -48,7 +49,9 @@ public class OptimumDistance {
 		}
 
 		chariots.add(new Chariot(config.getNbBoxesTrolley()));
-
+                
+                insertionSortColis(colis);
+                
 		return colisToChariot(colis, chariots, config);
 	}
 
@@ -183,7 +186,23 @@ public class OptimumDistance {
 			newColis = colis.get(i);
 			int j = i - 1;
 			int k = i;
-			while (j >= 0 && colis.get(j).getId() > newColis.getId()) {
+//			while (j >= 0 && 
+//                                colis.get(j)
+//                                        .getProduits()
+//                                        .get(0)
+//                                        .getProduit()
+//                                        .getLocalisation()
+//                                        .getId() > 
+//                                newColis.getProduits()
+//                                        .get(0)
+//                                        .getProduit()
+//                                        .getLocalisation()
+//                                        .getId()) {
+//				k = j + 1;
+//				colis.set(k, colis.get(j));
+//				j--;
+//			}
+                        while(j >= 0 && averageLocalisation(colis.get(j)) > averageLocalisation(newColis)) {
 				k = j + 1;
 				colis.set(k, colis.get(j));
 				j--;
@@ -193,5 +212,40 @@ public class OptimumDistance {
 		}
 
 		return colis;
+	}
+        
+        public int averageLocalisation(Colis colis) {
+            int average = 0;
+            int compt = 0;
+            for(QuantiteProduit p: colis.getProduits()) {
+                average += p.getProduit().getLocalisation().getId();
+                compt++;
+            }
+            
+            return average / compt;
+        }
+        
+        
+
+	/**
+	 * Local main fucntion.
+	 * @param args standard arguments
+	 */
+	public static void main(String[] args) {
+		Instance instance = new Instance("./instances/instance_0116_131940_Z2.txt");
+		instance.parse();
+		instance.dispatch();
+		Sample solution = new Sample(instance);
+		solution.populateChariots();
+		System.out.println(solution.toString());
+	}
+
+	public void populateChariots() {
+		this.chariots = new ArrayList<>();
+		this.chariots.addAll(optimumDistanceSolution(instance.getEntrepot(), instance.getConfig()));
+	}
+
+	List<Chariot> getChariots() {
+		return this.chariots;
 	}
 }
