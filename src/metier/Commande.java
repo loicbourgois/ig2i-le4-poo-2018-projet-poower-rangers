@@ -21,6 +21,7 @@ import javax.persistence.Table;
 
 /**
  * Ensemble de produits avec des quantités.
+ *
  * @author Rod
  */
 @Entity
@@ -51,6 +52,7 @@ public class Commande {
 
 	/**
 	 * Consturctor.
+	 *
 	 * @param id id
 	 * @param nbColis Colis count
 	 */
@@ -67,6 +69,7 @@ public class Commande {
 
 	/**
 	 * Sum weight from every products.
+	 *
 	 * @return total weight
 	 */
 	public int calculePoidsTotal() {
@@ -79,6 +82,7 @@ public class Commande {
 
 	/**
 	 * Add volume from every products.
+	 *
 	 * @return total volume
 	 */
 	public int calculeVolumeTotal() {
@@ -104,15 +108,24 @@ public class Commande {
 	public int getNbColis() {
 		return nbColis;
 	}
-        
-        public int getQttProduit(Produit produit) {
-            if(produit == null) return 0;
-            Optional<QuantiteProduit> op = this.produitsCommandes.stream()
-                .filter(quantiteProduit -> quantiteProduit.getProduit().equals(produit))
-                .findFirst();
-            if(op.isPresent()) return op.get().getQuantite();
-            return 0;
-        }
+
+	/**
+	 * Given a product, returns the corresponding quantity.
+	 * @param produit produit
+	 * @return quantité
+	 */
+	public int getQttProduit(Produit produit) {
+		if (produit == null) {
+			return 0;
+		}
+		Optional<QuantiteProduit> op = this.produitsCommandes.stream()
+						.filter(quantiteProduit -> quantiteProduit.getProduit().equals(produit))
+						.findFirst();
+		if (op.isPresent()) {
+			return op.get().getQuantite();
+		}
+		return 0;
+	}
 
 	@Override
 	public int hashCode() {
