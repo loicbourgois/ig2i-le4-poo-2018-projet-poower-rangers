@@ -40,7 +40,7 @@ public class Main {
 		instances.add("instance_0606_136175_Z1");
 		instances.add("instance_0606_136178_Z1");
 		
-		for (int i = 0; i < instances.size() && i < 1; i++) {
+		for (int i = 0; i < instances.size() && i < 10; i++) {
 			System.out.println(run(instances.get(i)));
 		}
 	}
@@ -57,7 +57,8 @@ public class Main {
 		instance.parse();
 		instance.dispatch();
 		Output output = null;
-		if(true) {
+		boolean useSolver = true;
+		if (useSolver) {
 			System.out.println("\nSolver");
 			Solver solver = new Solver(instance);
 			solver.populateChariots();
