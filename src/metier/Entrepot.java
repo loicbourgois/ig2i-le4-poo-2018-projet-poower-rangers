@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package metier;
 
 import java.util.HashSet;
@@ -18,30 +19,33 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Entrepot.
  * @author Aurélien Ledieu
  */
 @Entity
-@Table(name="ENTREPOT")
+@Table(name = "ENTREPOT")
 public class Entrepot {
 
-        @Id
-        @Column(name="ENTREPOTNO")
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column(name = "ENTREPOTNO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-        
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Localisation> depots;
-        
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Produit> produits;
-        
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Commande> commandes;
-        
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entrepot")
 	private Set<Chariot> chariots;
 
+	/**
+	 * Default constructor.
+	 */
 	public Entrepot() {
 		depots = new HashSet<>();
 		produits = new HashSet<>();
@@ -54,6 +58,11 @@ public class Entrepot {
 		this.id = id;
 	}
 
+	/**
+	 * Add dépot to an entrepot.
+	 * @param localisation depot to add
+	 * @return success or not
+	 */
 	public boolean addDepot(Localisation localisation) {
 		if (depots.contains(localisation)) {
 			return false;
@@ -61,6 +70,11 @@ public class Entrepot {
 		return (depots.add(localisation));
 	}
 
+	/**
+	 * Add a product to an entrepot.
+	 * @param produit product to add
+	 * @return success or not
+	 */
 	public boolean addProduit(Produit produit) {
 		if (produits.contains(produit)) {
 			return false;
@@ -68,6 +82,11 @@ public class Entrepot {
 		return (produits.add(produit));
 	}
 
+	/**
+	 * Add a commande to en entrepot.
+	 * @param commande commande to add
+	 * @return success or not
+	 */
 	public boolean addCommande(Commande commande) {
 		if (commandes.contains(commande)) {
 			return false;
@@ -75,6 +94,11 @@ public class Entrepot {
 		return (commandes.add(commande));
 	}
 
+	/**
+	 * Add a chariot to an Entrepot. 
+	 * @param c chariot to add
+	 * @return success or not
+	 */
 	public boolean addChariot(Chariot c) {
 		if (this.chariots.contains(c)) {
 			return false;

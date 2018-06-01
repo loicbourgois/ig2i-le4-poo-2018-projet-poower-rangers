@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package metier;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Instance.
  * @author Rod + Loïc
  */
 public class Instance {
@@ -43,9 +44,16 @@ public class Instance {
 	ArrayList allOrders = new ArrayList<>();
 	private static boolean DEBUG = false;
 
+	/**
+	 * Default constructor.
+	 */
 	public Instance() {
 	}
 
+	/**
+	 * Constructor.
+	 * @param pathToFile path to the file corresponding to this Instance
+	 */
 	public Instance(String pathToFile) {
 		this.pathToFile = pathToFile;
 		this.locationCount = -1;
@@ -54,22 +62,28 @@ public class Instance {
 		this.boxDimensions = new ArrayList<>();
 	}
 
+	/**
+	 * Dispatch parsed values to objects.
+	 * @return true if success
+	 */
 	public boolean dispatch() {
-		System.out.println("dispatching");
-
 		config = new Configuration(trolleyCount, boxDimensions.get(0), boxDimensions.get(1));
 
 		//Location
 		for (ArrayList<String> l : locations) {
-			Localisation loc = new Localisation(Integer.parseInt(l.get(0)), Integer.parseInt(l.get(1)), Integer.parseInt(l.get(2)));
+			Localisation loc = new Localisation(
+							Integer.parseInt(l.get(0)), 
+							Integer.parseInt(l.get(1)), 
+							Integer.parseInt(l.get(2))
+			);
 			allLocation.add(loc);
 		}
 
 		//Distance Location
 		for (ArrayList<Integer> a : arcs) {
-			Localisation lDepart = (Localisation) allLocation.get(a.get(0));
-			Localisation lArrivee = (Localisation) allLocation.get(a.get(1));
-			lDepart.addDistance(lArrivee, a.get(2));
+			Localisation depart = (Localisation) allLocation.get(a.get(0));
+			Localisation arrivee = (Localisation) allLocation.get(a.get(1));
+			depart.addDistance(arrivee, a.get(2));
 		}
 
 		//Products
@@ -143,8 +157,12 @@ public class Instance {
 		return true;
 	}
 
+	/**
+	 * Parse the corresponding file.
+	 * @return true in case of success
+	 */
 	public boolean parse() {
-		System.out.println("parsing");
+		// System.out.println("parsing");
 		try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -315,6 +333,10 @@ public class Instance {
 						+ '}';
 	}
 
+	/**
+	 * Main function to test Instance class.
+	 * @param args default arguments 
+	 */
 	public static void main(String[] args) {
 		ArrayList<String> files = new ArrayList<>();
 		int limit = 1;

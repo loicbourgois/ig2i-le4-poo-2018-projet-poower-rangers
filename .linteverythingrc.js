@@ -5,6 +5,7 @@ module.exports = {
 		'.git',
 		'.travis.yml',
 		'build',
+		'build.xml',
 		'ig2i-le4-poo-2018-tp4.pdf',
 		'db_routage_with_data.sql',
 		'db_scripts_instances.zip',
@@ -16,10 +17,29 @@ module.exports = {
 		'nbproject',
 		'solutions',
 		'src',
-		'test'
+		'test',
+		'dist/poowerrangers.jar',
+		'dist/README.TXT',
+		'checker.py',
+		'ig2i-le4-poo-projet-sujet.pdf',
+		'manifest.mf',
+		'package.json',
+		'PULL_REQUEST_TEMPLATE.md',
+		'solutions',
+		'test',
+		'build.xml',
+		'checker.log',
+		'dist',
+		'instances',
+		'LICENSE',
+		'node_modules',
+		'package-lock.json',
+		'README.md',
+		'src'
 	],
 	ignoreExtensions: [
 		'zip',
-		'pdf'
+		'pdf',
+		'jar'
 	]
 };

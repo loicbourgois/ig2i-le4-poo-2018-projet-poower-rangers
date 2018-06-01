@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package metier;
 
 import java.util.ArrayList;
@@ -20,130 +21,159 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Représente un colis.
  * @author Rod
  */
 @Entity
-@Table(name="COLIS")
+@Table(name = "COLIS")
 public class Colis {
-    
-    @Id
-    @Column(name="COLISNO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @Column(name="POIDSRESTANT")
-    private int poidsRestant;
-    
-    @Column(name="VOLUMERESTANT")
-    private int volumeRestant;
-    
-    @Column(name="COMMANDE")
-    private Commande commande;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
-    private List<QuantiteProduit> produits;
-    
-    @JoinColumn(name = "CHARIOT", referencedColumnName = "CHARIOTNO")
-    @ManyToOne(optional = false)
-    private Chariot chariot;
 
-    public Colis() {
-        this.produits = new ArrayList<QuantiteProduit>();
-    }
-    
-    public Colis(int poidsRestant, int volumeRestant, Commande commande) {
-        this();
-        this.poidsRestant = poidsRestant;
-        this.volumeRestant = volumeRestant;
-        this.commande = commande;
-    }
+	@Id
+	@Column(name = "COLISNO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    public Colis(int id, int poidsRestant, int volumeRestant, Commande commande) {
-        this();
-        this.id = id;
-        this.poidsRestant = poidsRestant;
-        this.volumeRestant = volumeRestant;
-        this.commande = commande;
-    }
-    
-    public boolean addProduitQuantite(Produit p , Integer q){
-        int poidsTotal = p.getPoids()*q;
-        int volumeTotal = p.getVolume()*q;
-        
-        if(this.poidsRestant - poidsTotal < 0) return false;
-        if(this.volumeRestant - volumeTotal < 0) return false;
-        
-        this.produits.add(new QuantiteProduit(p,q));
-        this.poidsRestant -= poidsTotal;
-        this.volumeRestant -= volumeTotal;
-        return true;
-    }
+	@Column(name = "POIDSRESTANT")
+	private int poidsRestant;
 
-    public int getId() {
-        return id;
-    }
+	@Column(name = "VOLUMERESTANT")
+	private int volumeRestant;
 
-    public int getPoidsRestant() {
-        return poidsRestant;
-    }
+	@JoinColumn(name = "COMMANDE")
+	private Commande commande;
 
-    public int getVolumeRestant() {
-        return volumeRestant;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "colis")
+	private List<QuantiteProduit> produits;
 
-    public Commande getCommande() {
-        return commande;
-    }
+	@JoinColumn(name = "CHARIOT", referencedColumnName = "CHARIOTNO")
+	@ManyToOne(optional = false)
+	private Chariot chariot;
 
-    public List<QuantiteProduit> getProduits() {
-        return produits;
-    }
+	/**
+	 * Default constructor.
+	 */
+	public Colis() {
+		this.produits = new ArrayList<QuantiteProduit>();
+	}
 
-    public Chariot getChariot() {
-        return chariot;
-    }
+	/**
+	 * Secondary constructor.
+	 * @param poidsRestant poids restant
+	 * @param volumeRestant colume restant
+	 * @param commande commande
+	 */
+	public Colis(int poidsRestant, int volumeRestant, Commande commande) {
+		this();
+		this.poidsRestant = poidsRestant;
+		this.volumeRestant = volumeRestant;
+		this.commande = commande;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
+	/**
+	 * Third constructor.
+	 * @param id id
+	 * @param poidsRestant poids restant
+	 * @param volumeRestant columne restant
+	 * @param commande commande
+	 */
+	public Colis(int id, int poidsRestant, int volumeRestant, Commande commande) {
+		this();
+		this.id = id;
+		this.poidsRestant = poidsRestant;
+		this.volumeRestant = volumeRestant;
+		this.commande = commande;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Colis other = (Colis) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (this.poidsRestant != other.poidsRestant) {
-            return false;
-        }
-        if (this.volumeRestant != other.volumeRestant) {
-            return false;
-        }
-        if (!Objects.equals(this.commande, other.commande)) {
-            return false;
-        }
-        if (!Objects.equals(this.produits, other.produits)) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Add products to a Colis.
+	 * @param p product
+	 * @param q quantity
+	 * @return 
+	 */
+	public boolean addProduitQuantite(Produit p, Integer q) {
+		int poidsTotal = p.getPoids() * q;
+		int volumeTotal = p.getVolume() * q;
 
-    @Override
-    public String toString() {
-        return "Colis{" + "id=" + id + ", poidsRestant=" + poidsRestant + ", volumeRestant=" + volumeRestant + ", commande=" + commande + '}'+ "\n";
-    }
-    
-    
+		if (this.poidsRestant - poidsTotal < 0) {
+			return false;
+		}
+		if (this.volumeRestant - volumeTotal < 0) {
+			return false;
+		}
+
+		this.produits.add(new QuantiteProduit(p, q));
+		this.poidsRestant -= poidsTotal;
+		this.volumeRestant -= volumeTotal;
+		return true;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getPoidsRestant() {
+		return poidsRestant;
+	}
+
+	public int getVolumeRestant() {
+		return volumeRestant;
+	}
+
+	public Commande getCommande() {
+		return commande;
+	}
+
+	public List<QuantiteProduit> getProduits() {
+		return produits;
+	}
+
+	public Chariot getChariot() {
+		return chariot;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Colis other = (Colis) obj;
+		if (this.id != other.id) {
+			return false;
+		}
+		if (this.poidsRestant != other.poidsRestant) {
+			return false;
+		}
+		if (this.volumeRestant != other.volumeRestant) {
+			return false;
+		}
+		if (!Objects.equals(this.commande, other.commande)) {
+			return false;
+		}
+		if (!Objects.equals(this.produits, other.produits)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Colis{" 
+						+ "id=" + id 
+						+ ", poidsRestant=" + poidsRestant 
+						+ ", volumeRestant=" + volumeRestant 
+						+ ", commande=" + commande 
+						+ '}' + "\n";
+	}
 }

@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package metier;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,82 +21,91 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Chariot.
  * @author Aurélien Ledieu
  */
 @Entity
-@Table(name="CHARIOT")
+@Table(name = "CHARIOT")
 public class Chariot {
-    
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Column(name="CHARIOTNO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @Column(name="CAPAMAX")
-    private final int capaMax;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chariot")
-    private Set<Colis> colis;
-    
-    @JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
-    @ManyToOne(optional = false)
-    private Entrepot entrepot;
 
-    public Chariot(int capaMax) {
-        this.capaMax = capaMax;
-	this.colis = new HashSet<>();
-    }
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name = "CHARIOTNO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    public Chariot(int id,int capaMax) {
-	this(capaMax);
-	this.id = id;
-    }
+	@Column(name = "CAPAMAX")
+	private int capaMax;
 
-    public int getId() {
-	return id;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "chariot")
+	private Set<Colis> colis;
 
-    public Set<Colis> getColis() {
-	return colis;
-    }
+	@JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+	@ManyToOne(optional = false)
+	private Entrepot entrepot;
 
-    @Override
-    public int hashCode() {
-	int hash = 7;
-	return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
+	public Chariot() {
 	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	final Chariot other = (Chariot) obj;
-	if (this.id != other.id) {
-	    return false;
-	}
-	if (!Objects.equals(this.colis, other.colis)) {
-	    return false;
-	}
-	return true;
-    }
-    
-    public boolean addColis(Colis colis){
-	if(colis == null) return false;
-	return(this.colis.add(colis));
-    }
 
-    @Override
-    public String toString() {
-	return "Chariot{" + "id=" + id + ", colis=" + colis + '}'+ "\n";
-    }
-    
+	public Chariot(int capaMax) {
+		this.capaMax = capaMax;
+		this.colis = new HashSet<>();
+	}
+
+	public Chariot(int id, int capaMax) {
+		this(capaMax);
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Set<Colis> getColis() {
+		return colis;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Chariot other = (Chariot) obj;
+		if (this.id != other.id) {
+			return false;
+		}
+		if (!Objects.equals(this.colis, other.colis)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Add a colis to a chariot.
+	 * @param colis colis to add
+	 * @return 
+	 */
+	public boolean addColis(Colis colis) {
+		if (colis == null) {
+			return false;
+		}
+		return (this.colis.add(colis));
+	}
+
+	@Override
+	public String toString() {
+		return "Chariot{" + "id=" + id + ", colis=" + colis + '}' + "\n";
+	}
 }

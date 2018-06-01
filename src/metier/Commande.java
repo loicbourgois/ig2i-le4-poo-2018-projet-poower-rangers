@@ -3,35 +3,44 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package metier;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Ensemble de produits avec des quantités.
  * @author Rod
  */
 @Entity
-@Table(name="COMMANDE")
+@Table(name = "COMMANDE")
 public class Commande {
 
-    //tout doux
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
 	private List<QuantiteProduit> produitsCommandes;
-        
-    //tout doux
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
 	private List<QuantiteProduit> produitsRestants;
-        
-        @Id
-        @Column(name="COMMANDENO")
+
+	@Id
+	@Column(name = "COMMANDENO")
 	private int id;
-        
-        @Column(name="NBCOLIS")
+
+	@JoinColumn(name = "ENTREPOT", referencedColumnName = "ENTREPOTNO")
+	@ManyToOne(optional = false)
+	private Entrepot entrepot;
+
+	@Column(name = "NBCOLIS")
 	private int nbColis;
 
 	public Commande() {
@@ -39,9 +48,14 @@ public class Commande {
 		this.produitsRestants = new ArrayList<>();
 	}
 
-	public Commande(int Integer, int nbColis) {
+	/**
+	 * Consturctor.
+	 * @param id id
+	 * @param nbColis Colis count
+	 */
+	public Commande(int id, int nbColis) {
 		this();
-		this.id = Integer;
+		this.id = id;
 		this.nbColis = nbColis;
 	}
 
@@ -50,6 +64,10 @@ public class Commande {
 		this.produitsRestants.add(new QuantiteProduit(p, q));
 	}
 
+	/**
+	 * Sum weight from every products.
+	 * @return total weight
+	 */
 	public int calculePoidsTotal() {
 		int poidsTotal = 0;
 		for (QuantiteProduit qp : this.produitsCommandes) {
@@ -58,6 +76,10 @@ public class Commande {
 		return poidsTotal;
 	}
 
+	/**
+	 * Add volume from every products.
+	 * @return total volume
+	 */
 	public int calculeVolumeTotal() {
 		int volTotal = 0;
 		for (QuantiteProduit qp : this.produitsCommandes) {
@@ -66,13 +88,13 @@ public class Commande {
 		return volTotal;
 	}
 
-        public List<QuantiteProduit> getProduitsCommandes() {
-            return produitsCommandes;
-        }
+	public List<QuantiteProduit> getProduitsCommandes() {
+		return produitsCommandes;
+	}
 
-        public List<QuantiteProduit> getProduitsRestants() {
-            return produitsRestants;
-        }
+	public List<QuantiteProduit> getProduitsRestants() {
+		return produitsRestants;
+	}
 
 	public int getInteger() {
 		return id;
