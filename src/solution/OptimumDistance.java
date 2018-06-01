@@ -73,8 +73,6 @@ public class OptimumDistance {
 		insertionSort(produitsCommandes);
 
 		for (Produit p : produitsCommandes) {
-			// TODO: Si 80% remplis passer au suivant 
-			// et ne pas mettre produit trop loin id > à +5/+10/+15?
 			Integer qtt = commande.getQttProduit(p);
 
 			for (Integer i = 0; i < qtt; i++) {
@@ -169,5 +167,31 @@ public class OptimumDistance {
 		}
 
 		return produits;
+	}
+        
+        /**
+	 * Sort colis.
+	 * @param produits produits
+	 * @return liste de produits
+	 */
+	public List<Colis> insertionSortColis(List<Colis> colis) {
+
+		Colis newColis = new Colis();
+		int i = 1;
+
+		while (i < colis.size()) {
+			newColis = colis.get(i);
+			int j = i - 1;
+			int k = i;
+			while (j >= 0 && colis.get(j).getId() > newColis.getId()) {
+				k = j + 1;
+				colis.set(k, colis.get(j));
+				j--;
+			}
+			colis.set(k, newColis);
+			i++;
+		}
+
+		return colis;
 	}
 }
