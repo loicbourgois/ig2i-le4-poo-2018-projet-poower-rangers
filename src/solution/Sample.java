@@ -27,7 +27,6 @@ import metier.QuantiteProduit;
 public class Sample {
 
 	private Instance instance;
-	private Output output;
 	public List<Chariot> chariots;
 
 	public Sample(Instance instance) {
