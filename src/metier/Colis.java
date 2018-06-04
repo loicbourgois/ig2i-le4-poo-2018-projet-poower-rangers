@@ -9,6 +9,7 @@ package metier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,12 +49,14 @@ public class Colis {
 	@JoinColumn(name = "CHARIOT", referencedColumnName = "CHARIOTNO")
 	@ManyToOne(optional = false)
 	private Chariot chariot;
+	private int averageProductId;
 
 	/**
 	 * Default constructor.
 	 */
 	public Colis() {
 		this.produits = new ArrayList<QuantiteProduit>();
+		this.averageProductId = -1;
 	}
 
 	/**
@@ -174,6 +177,15 @@ public class Colis {
 						+ ", poidsRestant=" + poidsRestant 
 						+ ", volumeRestant=" + volumeRestant 
 						+ ", commande=" + commande 
+						+ ", averageProductId=" + averageProductId
 						+ '}' + "\n";
+	}
+
+	public void setAverageProductId(int id) {
+		this.averageProductId = id;
+	}
+
+	public int getAverageId() {
+		return this.averageProductId;
 	}
 }

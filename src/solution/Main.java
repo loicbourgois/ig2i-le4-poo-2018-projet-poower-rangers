@@ -40,7 +40,7 @@ public class Main {
 		instances.add("instance_0606_136175_Z1");
 		instances.add("instance_0606_136178_Z1");
 		
-		for (int i = 0; i < instances.size(); i++) {
+		for (int i = 0; i < instances.size() && i < 10; i++) {
 			System.out.println(run(instances.get(i)));
 		}
 	}
@@ -56,9 +56,18 @@ public class Main {
 		Instance instance = new Instance(fileName);
 		instance.parse();
 		instance.dispatch();
-		Sample solution = new Sample(instance);
-		solution.populateChariots();
-		Output output = new Output(fileName, solution.getChariots());
+		Output output = null;
+		boolean useSolver = true;
+		if (useSolver) {
+			System.out.println("\nSolver");
+			Solver solver = new Solver(instance);
+			solver.populateChariots();
+			output = new Output(fileName, solver.getChariots());
+		} else {
+			Sample sample = new Sample(instance);
+			sample.populateChariots();
+			output = new Output(fileName, sample.getChariots());
+		}
 		output.writeToFile();
 
 		// Move to test folder
