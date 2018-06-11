@@ -6,30 +6,29 @@
 
 package solution;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import metier.Instance;
 import metier.Output;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Classe principale.
+ *
  * @author Loïc Bourgois
  */
 public class Main {
 
 	/**
 	 * Fonction de lancement.
+	 *
 	 * @param args argument standards
 	 */
 	public static void main(String[] args) {
 		ArrayList<String> instances = new ArrayList<>();
-		instances.add("instance_0116_131940_Z2");
+		//instances.add("instance_0116_131940_Z2");
 		instances.add("instance_0116_131950_Z1");
 		instances.add("instance_0130_132439_Z2");
 		instances.add("instance_0202_132568_Z2");
@@ -39,15 +38,17 @@ public class Main {
 		instances.add("instance_0606_136170_Z1");
 		instances.add("instance_0606_136175_Z1");
 		instances.add("instance_0606_136178_Z1");
-		
-		for (int i = 0; i < instances.size() && i < 10; i++) {
-			System.out.println(run(instances.get(i)));
+
+
+		for (int i = 0; i < instances.size(); i++) {
+			Logger.getLogger(Main.class.getName()).info(run(instances.get(i)));
 		}
 	}
-	
-	
+
+
 	/**
 	 * Run generate a solution from an instance and launch the checker.
+	 *
 	 * @param instanceName name of the instance
 	 * @return length.
 	 */
@@ -56,18 +57,9 @@ public class Main {
 		Instance instance = new Instance(fileName);
 		instance.parse();
 		instance.dispatch();
-		Output output = null;
-		boolean useSolver = true;
-		if (useSolver) {
-			System.out.println("\nSolver");
-			Solver solver = new Solver(instance);
-			solver.populateChariots();
-			output = new Output(fileName, solver.getChariots());
-		} else {
-			Sample sample = new Sample(instance);
-			sample.populateChariots();
-			output = new Output(fileName, sample.getChariots());
-		}
+		Solver solver = new Solver(instance);
+		solver.populateChariots();
+		Output output = new Output(fileName, solver.getChariots());
 		output.writeToFile();
 
 		// Move to test folder
@@ -79,12 +71,13 @@ public class Main {
 
 		// Run checker
 		return execCmd("cd ./test ; java -jar CheckerBatchingPicking.jar "
-						+ instanceName
-						+ " ; cd ../");
+				+ instanceName
+				+ " ; cd ../");
 	}
 
 	/**
 	 * Executes an external command.
+	 *
 	 * @param cmd command to execute
 	 */
 	public static String execCmd(String cmd) {
@@ -98,35 +91,36 @@ public class Main {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+		if (proc != null) {
 
-		BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 
-		// read the output from the command
-		// System.out.println("Here is the standard output of the command:\n");
-		String s = null;
-		String length = "";
-		try {
-			while ((s = stdInput.readLine()) != null) {
-				//System.out.println(s);
-				if (s.startsWith("--> Distance totale : ")) {
-					length = s;
-					length = length.replace("--> Distance totale : ","");
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+
+			// read the output from the command
+			String s = null;
+			String length = "";
+			try {
+				while ((s = stdInput.readLine()) != null) {
+					if (s.startsWith("--> Distance totale : ")) {
+						length = s;
+						length = length.replace("--> Distance totale : ", "");
+					}
 				}
+			} catch (IOException ex) {
+				Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 			}
-		} catch (IOException ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-		}
 
-		// read any errors from the attempted command
-		// System.out.println("Here is the standard error of the command (if any):\n");
-		try {
-			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
+			// read any errors from the attempted command
+			try {
+				while ((s = stdError.readLine()) != null) {
+					Logger.getLogger(Main.class.getName()).severe(s);
+				}
+			} catch (IOException ex) {
+				Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 			}
-		} catch (IOException ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+			return length;
 		}
-		return length;
+		return "";
 	}
 }

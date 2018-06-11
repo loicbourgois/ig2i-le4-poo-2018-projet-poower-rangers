@@ -7,7 +7,6 @@
 package metier;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class Instance {
 	ArrayList allLocation = new ArrayList<>();
 	ArrayList allProducts = new ArrayList<>();
 	ArrayList allOrders = new ArrayList<>();
-	private static boolean DEBUG = false;
+	private static boolean debug = false;
 
 	/**
 	 * Default constructor.
@@ -63,6 +62,46 @@ public class Instance {
 	}
 
 	/**
+	 * Main function to test Instance class.
+	 *
+	 * @param args default arguments
+	 */
+	public static void main(String[] args) {
+		ArrayList<String> files = new ArrayList<>();
+		int limit = 1;
+		files.add("./instances/instance_0116_131940_Z2.txt");
+		files.add("./instances/instance_0116_131950_Z1.txt");
+		files.add("./instances/instance_0130_132439_Z2.txt");
+		files.add("./instances/instance_0202_132568_Z2.txt");
+		files.add("./instances/instance_0203_132623_Z1.txt");
+		files.add("./instances/instance_0214_132873_Z2.txt");
+		files.add("./instances/instance_0215_132916_Z2.txt");
+		files.add("./instances/instance_0606_136170_Z1.txt");
+		files.add("./instances/instance_0606_136175_Z1.txt");
+		files.add("./instances/instance_0606_136178_Z1.txt");
+		for (int i = 0; i < files.size() && i < limit; i++) {
+			Logger.getLogger(Instance.class.getName()).info("----------------");
+			Instance instance = new Instance(files.get(i));
+			instance.parse();
+			Logger.getLogger(Instance.class.getName()).info(instance.toString());
+			instance.dispatch();
+			Logger.getLogger(Instance.class.getName()).info(instance.toStringDispatched());
+		}
+	}
+
+	public Entrepot getEntrepot() {
+		return entrepot;
+	}
+
+	public Configuration getConfig() {
+		return config;
+	}
+
+	public String getPathToFile() {
+		return pathToFile;
+	}
+
+	/**
 	 * Dispatch parsed values to objects.
 	 * @return true if success
 	 */
@@ -72,8 +111,8 @@ public class Instance {
 		//Location
 		for (ArrayList<String> l : locations) {
 			Localisation loc = new Localisation(
-							Integer.parseInt(l.get(0)), 
-							Integer.parseInt(l.get(1)), 
+					Integer.parseInt(l.get(0)),
+					Integer.parseInt(l.get(1)),
 							Integer.parseInt(l.get(2))
 			);
 			allLocation.add(loc);
@@ -91,8 +130,8 @@ public class Instance {
 			Localisation l = (Localisation) allLocation.get(p.get(1));
 			allProducts.add(new Produit(p.get(0), p.get(2), p.get(3), l));
 		}
-		if (DEBUG) {
-			System.out.println(allProducts);
+		if (debug) {
+			Logger.getLogger(Instance.class.getName()).info(allProducts.toString());
 		}
 
 		//Commande
@@ -101,36 +140,23 @@ public class Instance {
 			for (int i = 3; i < order.size() - 1; i += 2) {
 				Produit p = (Produit) allProducts.get(order.get(i) - 1);
 				c.addProduitQuantite(p, order.get(i + 1));
-				if (DEBUG) {
-					System.out.println(p);
+				if (debug) {
+					Logger.getLogger(Instance.class.getName()).info(p.toString());
 				}
 			}
 			allOrders.add(c);
 			entrepot.addCommande(c);
-			if (DEBUG) {
-				System.out.println(c);
+			if (debug) {
+				Logger.getLogger(Instance.class.getName()).info(c.toString());
 			}
 		}
 
 		return true;
 	}
 
-	public Entrepot getEntrepot() {
-		return entrepot;
-	}
-
-	public Configuration getConfig() {
-		return config;
-	}
-
-	public String getPathToFile() {
-		return pathToFile;
-	}
-
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		return hash;
+		return 7;
 	}
 
 	@Override
@@ -151,10 +177,54 @@ public class Instance {
 		if (!Objects.equals(this.entrepot, other.entrepot)) {
 			return false;
 		}
-		if (!Objects.equals(this.config, other.config)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.config, other.config);
+	}
+
+	@Override
+	public String toString() {
+		return "Instance{" + "\n"
+				+ "\t" + "entrepot : " + entrepot.getId() + ",\n"
+				+ "\t" + "config : " + config + ",\n"
+				+ "\t" + "pathToFile : " + pathToFile + ",\n"
+				+ "\t" + "locationCount : " + locationCount + ",\n"
+				+ "\t" + "procuctCount : " + procuctCount + ",\n"
+				+ "\t" + "trolleyCount : " + trolleyCount + ",\n"
+				+ "\t" + "dimensionCount : " + dimensionCount + ",\n"
+				+ "\t" + "boxDimensions : " + boxDimensions + ",\n"
+				+ "\t" + "acceptMixedOrders : " + acceptMixedOrders + ",\n"
+				+ "\t" + "products : " + products + ",\n"
+				+ "\t" + "orderCount : " + orderCount + ",\n"
+				+ "\t" + "orders : " + orders + ",\n"
+				+ "\t" + "verticesIntersectionsCount : " + verticesIntersectionsCount + ",\n"
+				+ "\t" + "departingDepot : " + departingDepot + ",\n"
+				+ "\t" + "arrivalDepot : " + arrivalDepot + ",\n"
+				+ "\t" + "arcs : " + arcs + ",\n"
+				+ "\t" + "arcs2 : " + shortestPath + ",\n"
+				+ "\t" + "locations : " + locations + ",\n"
+				+ '}';
+	}
+
+	private String toStringDispatched() {
+		return "Instance{" + "\n"
+				+ "\t" + "entrepot : " + entrepot + ",\n"
+				+ "\t" + "config : " + config + ",\n"
+				+ "\t" + "pathToFile : " + pathToFile + ",\n"
+				//+ "\t" + "locationCount : " + locationCount + ",\n"
+				//+ "\t" + "procuctCount : " + procuctCount + ",\n"
+				//+ "\t" + "trolleyCount : " + trolleyCount + ",\n"
+				//+ "\t" + "dimensionCount : " + dimensionCount + ",\n"
+				//+ "\t" + "boxDimensions : " + boxDimensions + ",\n"
+				//+ "\t" + "acceptMixedOrders : " + acceptMixedOrders + ",\n"
+				//+ "\t" + "products : " + products + ",\n"
+				//+ "\t" + "orderCount : " + orderCount + ",\n"
+				//+ "\t" + "orders : " + orders + ",\n"
+				//+ "\t" + "verticesIntersectionsCount : " + verticesIntersectionsCount + ",\n"
+				//+ "\t" + "departingDepot : " + departingDepot + ",\n"
+				//+ "\t" + "arrivalDepot : " + arrivalDepot + ",\n"
+				//+ "\t" + "arcs : " + arcs + ",\n"
+				//+ "\t" + "arcs2 : " + shortestPath + ",\n"
+				//+ "\t" + "locations : " + locations + ",\n"
+				+ '}';
 	}
 
 	/**
@@ -162,7 +232,6 @@ public class Instance {
 	 * @return true in case of success
 	 */
 	public boolean parse() {
-		// System.out.println("parsing");
 		try (BufferedReader br = new BufferedReader(new FileReader(this.pathToFile))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -186,19 +255,15 @@ public class Instance {
 					}
 				} else if (line.startsWith("//A box can accept mixed orders(0: no, 1: yes)")) {
 					line = br.readLine();
-					if (Integer.parseInt(line.replaceAll("\\s+", "")) == 0) {
-						this.acceptMixedOrders = false;
-					} else {
-						this.acceptMixedOrders = true;
-					}
+					this.acceptMixedOrders = Integer.parseInt(line.replaceAll("\\s+", "")) != 0;
 				} else if (line.startsWith("//Products")) {
 					line = br.readLine();
 					if (line.startsWith("//Idx Location Dim1 Dim2 ...")) {
-						this.products = new ArrayList<ArrayList<Integer>>();
+						this.products = new ArrayList<>();
 						line = br.readLine();
 						while (!line.startsWith("//Orders")) {
 							String[] numbersStr = line.split(" ");
-							ArrayList<Integer> numbers = new ArrayList<Integer>();
+							ArrayList<Integer> numbers = new ArrayList<>();
 							for (int i = 0; i < numbersStr.length; i++) {
 								numbers.add(Integer.parseInt(numbersStr[i]));
 							}
@@ -278,85 +343,9 @@ public class Instance {
 					}
 				}
 			}
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Instance.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
 			Logger.getLogger(Instance.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Instance{" + "\n"
-						+ "\t" + "entrepot : " + entrepot.getId() + ",\n"
-						+ "\t" + "config : " + config + ",\n"
-						+ "\t" + "pathToFile : " + pathToFile + ",\n"
-						+ "\t" + "locationCount : " + locationCount + ",\n"
-						+ "\t" + "procuctCount : " + procuctCount + ",\n"
-						+ "\t" + "trolleyCount : " + trolleyCount + ",\n"
-						+ "\t" + "dimensionCount : " + dimensionCount + ",\n"
-						+ "\t" + "boxDimensions : " + boxDimensions + ",\n"
-						+ "\t" + "acceptMixedOrders : " + acceptMixedOrders + ",\n"
-						+ "\t" + "products : " + products + ",\n"
-						+ "\t" + "orderCount : " + orderCount + ",\n"
-						+ "\t" + "orders : " + orders + ",\n"
-						+ "\t" + "verticesIntersectionsCount : " + verticesIntersectionsCount + ",\n"
-						+ "\t" + "departingDepot : " + departingDepot + ",\n"
-						+ "\t" + "arrivalDepot : " + arrivalDepot + ",\n"
-						+ "\t" + "arcs : " + arcs + ",\n"
-						+ "\t" + "arcs2 : " + shortestPath + ",\n"
-						+ "\t" + "locations : " + locations + ",\n"
-						+ '}';
-	}
-
-	private String toStringDispatched() {
-		return "Instance{" + "\n"
-						+ "\t" + "entrepot : " + entrepot + ",\n"
-						+ "\t" + "config : " + config + ",\n"
-						+ "\t" + "pathToFile : " + pathToFile + ",\n"
-						//+ "\t" + "locationCount : " + locationCount + ",\n"
-						//+ "\t" + "procuctCount : " + procuctCount + ",\n"
-						//+ "\t" + "trolleyCount : " + trolleyCount + ",\n"
-						//+ "\t" + "dimensionCount : " + dimensionCount + ",\n"
-						//+ "\t" + "boxDimensions : " + boxDimensions + ",\n"
-						//+ "\t" + "acceptMixedOrders : " + acceptMixedOrders + ",\n"
-						//+ "\t" + "products : " + products + ",\n"
-						//+ "\t" + "orderCount : " + orderCount + ",\n"
-						//+ "\t" + "orders : " + orders + ",\n"
-						//+ "\t" + "verticesIntersectionsCount : " + verticesIntersectionsCount + ",\n"
-						//+ "\t" + "departingDepot : " + departingDepot + ",\n"
-						//+ "\t" + "arrivalDepot : " + arrivalDepot + ",\n"
-						//+ "\t" + "arcs : " + arcs + ",\n"
-						//+ "\t" + "arcs2 : " + shortestPath + ",\n"
-						//+ "\t" + "locations : " + locations + ",\n"
-						+ '}';
-	}
-
-	/**
-	 * Main function to test Instance class.
-	 * @param args default arguments 
-	 */
-	public static void main(String[] args) {
-		ArrayList<String> files = new ArrayList<>();
-		int limit = 1;
-		files.add("./instances/instance_0116_131940_Z2.txt");
-		files.add("./instances/instance_0116_131950_Z1.txt");
-		files.add("./instances/instance_0130_132439_Z2.txt");
-		files.add("./instances/instance_0202_132568_Z2.txt");
-		files.add("./instances/instance_0203_132623_Z1.txt");
-		files.add("./instances/instance_0214_132873_Z2.txt");
-		files.add("./instances/instance_0215_132916_Z2.txt");
-		files.add("./instances/instance_0606_136170_Z1.txt");
-		files.add("./instances/instance_0606_136175_Z1.txt");
-		files.add("./instances/instance_0606_136178_Z1.txt");
-		for (int i = 0; i < files.size() && i < limit; i++) {
-			System.out.println("----------------");
-			Instance instance = new Instance(files.get(i));
-			instance.parse();
-			System.out.println(instance.toString());
-			instance.dispatch();
-			System.out.println(instance.toStringDispatched());
-		}
 	}
 }

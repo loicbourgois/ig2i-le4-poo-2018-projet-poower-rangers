@@ -6,18 +6,11 @@
 
 package metier;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * Ensemble de produits avec des quantités.
@@ -129,8 +122,7 @@ public class Commande {
 
 	@Override
 	public int hashCode() {
-		int hash = 5;
-		return hash;
+		return 5;
 	}
 
 	@Override
@@ -154,21 +146,17 @@ public class Commande {
 		if (!Objects.equals(this.produitsCommandes, other.produitsCommandes)) {
 			return false;
 		}
-		if (!Objects.equals(this.produitsRestants, other.produitsRestants)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.produitsRestants, other.produitsRestants);
 	}
 
 	@Override
 	public String toString() {
-		return "";
-		/*return "\t\tCommande : {\n"
+		return "\t\tCommande : {\n"
 						+ "\t\t\tid  : " + id + "\n"
 						//+ "\t\t\tproduitCommande : " + produitsCommandes  + "\n"
 						// + "],\n produitRestant=[" + produitsRestants 
 						// + ", nbColis=" + nbColis 
-						+ "\t\t}\n";*/
+				+ "\t\t}\n";
 	}
 
 	Integer getId() {

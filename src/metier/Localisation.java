@@ -6,19 +6,10 @@
 
 package metier;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * Position dans l'entrepot, trié par id.
@@ -97,7 +88,7 @@ public class Localisation {
 	 * @return 
 	 */
 	public boolean addDistance(Localisation localisation, Integer distance) {
-		if (distances.contains(localisation)) {
+		if (distances.contains(new Distance(localisation, distance))) {
 			return false;
 		}
 		return (distances.add(new Distance(localisation, distance)));
@@ -105,8 +96,7 @@ public class Localisation {
 
 	@Override
 	public int hashCode() {
-		int hash = 3;
-		return hash;
+		return 3;
 	}
 
 	@Override
@@ -130,10 +120,7 @@ public class Localisation {
 		if (this.posY != other.posY) {
 			return false;
 		}
-		if (!Objects.equals(this.distances, other.distances)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.distances, other.distances);
 	}
 
 	@Override

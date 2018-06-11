@@ -6,21 +6,9 @@
 
 package solution;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import metier.Chariot;
-import metier.Colis;
-import metier.Commande;
-import metier.Configuration;
-import metier.Entrepot;
-import metier.Instance;
-import metier.Output;
-import metier.Produit;
-import metier.QuantiteProduit;
+import metier.*;
+
+import java.util.*;
 
 /**
  * Solver.
@@ -30,8 +18,7 @@ import metier.QuantiteProduit;
 public class Solver {
 
 	private Instance instance;
-	private Output output;
-	public List<Chariot> chariots;
+	private List<Chariot> chariots;
 
 	public Solver(Instance instance) {
 		this.instance = instance;
@@ -45,7 +32,7 @@ public class Solver {
 	 * @return liste de chariots
 	 */
 	public List<Chariot> sampleSolution(Entrepot entrepot, Configuration config) {
-		List<Chariot> chariots = new ArrayList<>();
+		List<Chariot> chariotsList = new ArrayList<>();
 		List<Colis> colis = new ArrayList<>();
 
 		Set<Commande> commandes = entrepot.getCommandes();
@@ -54,9 +41,9 @@ public class Solver {
 			colis.addAll(productToColis(c, config));
 		}
 
-		chariots.add(new Chariot(config.getNbBoxesTrolley()));
+		chariotsList.add(new Chariot(config.getNbBoxesTrolley()));
 
-		return colisToChariot(colis, chariots, config);
+		return colisToChariot(colis, chariotsList, config);
 	}
 
 	/**
@@ -120,14 +107,10 @@ public class Solver {
 		Boolean assigne = false;
 
 		for (int i = 0; i < colis.size(); i++) {
-			//List<QuantiteProduit> p = colis.get(i).getProduits();
-			int aveId = 0;
 			int minId = 99999999;
 			int maxId = 0;
-			int aveMaxMin = 0;
 			for (int j = 0; j < colis.get(i).getProduits().size(); j++) {
 				int a = colis.get(i).getProduits().get(j).getProduit().getLocalisation().getId();
-				aveId += a;
 				if (a < minId) {
 					minId = a;
 				}
@@ -135,12 +118,10 @@ public class Solver {
 					maxId = a;
 				}
 			}
-			aveId /= colis.get(i).getProduits().size();
-			aveMaxMin = (maxId + minId) / 2;
 			colis.get(i).setAverageProductId(minId);
 		}
 
-		Collections.sort(colis, (Colis a1, Colis a2) -> a1.getAverageId() - a2.getAverageId());
+		Collections.sort(colis, Comparator.comparingInt(Colis::getAverageId));
 
 		for (Colis col : colis) {
 			assigne = false;
