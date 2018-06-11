@@ -21,6 +21,7 @@ import metier.QuantiteProduit;
 
 /**
  * Solver.
+ *
  * @author antoine
  */
 public class OptimumDistance {
@@ -34,6 +35,7 @@ public class OptimumDistance {
 
 	/**
 	 * Trouve une distance optimale.
+	 *
 	 * @param entrepot entrepot
 	 * @param config configuration
 	 * @return liste de chariots
@@ -49,14 +51,15 @@ public class OptimumDistance {
 		}
 
 		chariots.add(new Chariot(config.getNbBoxesTrolley()));
-                
-                insertionSortColis(colis);
-                
+
+		insertionSortColis(colis);
+
 		return colisToChariot(colis, chariots, config);
 	}
 
 	/**
 	 * Assign des produits à un colis.
+	 *
 	 * @param commande commande
 	 * @param config config
 	 * @return list de colis
@@ -77,7 +80,7 @@ public class OptimumDistance {
 
 		for (Produit p : produitsCommandes) {
 			Integer qtt = commande.getQttProduit(p);
-
+			
 			for (Integer i = 0; i < qtt; i++) {
 				assigne = false;
 
@@ -86,9 +89,9 @@ public class OptimumDistance {
 					if (assigne) {
 						break; // Si assigné, on sort
 					}
+					// S'il passe dans un colis on assigne
 					if (col.getPoidsRestant() >= p.getPoids() 
-									&& col.getVolumeRestant() >= p.getVolume()
-					) { // S'il passe dans un colis on assigne
+									&& col.getVolumeRestant() >= p.getVolume()) {
 						col.addProduitQuantite(p, 1);
 						assigne = true;
 					}
@@ -97,8 +100,8 @@ public class OptimumDistance {
 				// Aucun colis libre, création d'un nouveau
 				if (!assigne) {
 					Colis newColis = new Colis(
-									config.getPoidsMax(), 
-									config.getValueMax(), 
+									config.getPoidsMax(),
+									config.getValueMax(),
 									commande
 					);
 					newColis.addProduitQuantite(p, 1);
@@ -112,6 +115,7 @@ public class OptimumDistance {
 
 	/**
 	 * Assign a colis to a cart.
+	 *
 	 * @param colis colis
 	 * @param chariots cart
 	 * @param config configurations
@@ -148,6 +152,7 @@ public class OptimumDistance {
 
 	/**
 	 * Sort products.
+	 *
 	 * @param produits produits
 	 * @return liste de produits
 	 */
@@ -171,10 +176,11 @@ public class OptimumDistance {
 
 		return produits;
 	}
-        
-        /**
+
+	/**
 	 * Sort colis.
-	 * @param produits produits
+	 *
+	 * @param colis ListeColis
 	 * @return liste de produits
 	 */
 	public List<Colis> insertionSortColis(List<Colis> colis) {
@@ -186,23 +192,7 @@ public class OptimumDistance {
 			newColis = colis.get(i);
 			int j = i - 1;
 			int k = i;
-//			while (j >= 0 && 
-//                                colis.get(j)
-//                                        .getProduits()
-//                                        .get(0)
-//                                        .getProduit()
-//                                        .getLocalisation()
-//                                        .getId() > 
-//                                newColis.getProduits()
-//                                        .get(0)
-//                                        .getProduit()
-//                                        .getLocalisation()
-//                                        .getId()) {
-//				k = j + 1;
-//				colis.set(k, colis.get(j));
-//				j--;
-//			}
-                        while(j >= 0 && averageLocalisation(colis.get(j)) > averageLocalisation(newColis)) {
+			while (j >= 0 && averageLocalisation(colis.get(j)) > averageLocalisation(newColis)) {
 				k = j + 1;
 				colis.set(k, colis.get(j));
 				j--;
@@ -213,27 +203,27 @@ public class OptimumDistance {
 
 		return colis;
 	}
-        
-        /**
+
+	/**
 	 * Average of localisation.
+	 *
 	 * @param colis colis
 	 * @return int average
 	 */
-        public int averageLocalisation(Colis colis) {
-            int average = 0;
-            int compt = 0;
-            for(QuantiteProduit p: colis.getProduits()) {
-                average += p.getProduit().getLocalisation().getId();
-                compt++;
-            }
-            
-            return average / compt;
-        }
-        
-        
+	public int averageLocalisation(Colis colis) {
+		int average = 0;
+		int compt = 0;
+		for (QuantiteProduit p : colis.getProduits()) {
+			average += p.getProduit().getLocalisation().getId();
+			compt++;
+		}
+
+		return average / compt;
+	}
 
 	/**
 	 * Local main fucntion.
+	 *
 	 * @param args standard arguments
 	 */
 	public static void main(String[] args) {
