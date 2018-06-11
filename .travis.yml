@@ -1,4 +1,4 @@
 script:
   - npm install linteverything@latest
-  - printf "module.exports={ignore:['node_modules','package-lock.json','.git','.travis.yml'],verbose:true};" > .linteverythingrc.js
+  - printf "module.exports={ignore:['node_modules','package-lock.json','.git','.travis.yml','build','build.xml','ig2i-le4-poo-2018-tp4.pdf','db_routage_with_data.sql','db_scripts_instances.zip','db_scripts_instances.zip','build','checker','instances','lib','nbproject','solutions','src','test','dist/poowerrangers.jar','dist/README.TXT','checker.py','ig2i-le4-poo-projet-sujet.pdf','manifest.mf','package.json','PULL_REQUEST_TEMPLATE.md','solutions','test','build.xml','checker.log','dist','instances','LICENSE','node_modules','package-lock.json','README.md','src'],ignoreExtensions:['zip','pdf','jar']};" > .linteverythingrc.js
   - node ./node_modules/linteverything/bin/linteverything.js

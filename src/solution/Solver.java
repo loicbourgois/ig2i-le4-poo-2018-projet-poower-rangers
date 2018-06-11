@@ -7,9 +7,11 @@
 package solution;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import metier.Chariot;
 import metier.Colis;
 import metier.Commande;
@@ -22,19 +24,22 @@ import metier.QuantiteProduit;
 
 /**
  * Solver.
+ *
  * @author antoine
  */
-public class Sample {
+public class Solver {
 
 	private Instance instance;
+	private Output output;
 	public List<Chariot> chariots;
 
-	public Sample(Instance instance) {
+	public Solver(Instance instance) {
 		this.instance = instance;
 	}
 
 	/**
 	 * Permet de passer des commandes aux chariots.
+	 *
 	 * @param entrepot entrepot
 	 * @param config configuration
 	 * @return liste de chariots
@@ -56,9 +61,10 @@ public class Sample {
 
 	/**
 	 * Assign a product to a colis.
+	 *
 	 * @param commande commande
 	 * @param config configuration
-	 * @return 
+	 * @return
 	 */
 	public List<Colis> productToColis(Commande commande, Configuration config) {
 		List<Colis> colis = new ArrayList<>();
@@ -74,15 +80,15 @@ public class Sample {
 			for (Integer i = 0; i < qtt; i++) {
 				assigne = false;
 
-				// Parcourt des colis existants
-				for (Colis col : colis) {
+				// Parcourt des colis
+				for (Integer j = colis.size() - 1; j >= 0; j--) {
 					if (assigne) {
 						break; // Si assigné, on sort
 					}
-					if (col.getPoidsRestant() >= p.getPoids() 
-									&& col.getVolumeRestant() >= p.getVolume()
-					) { // S'il passe dans un colis on assigne
-						col.addProduitQuantite(p, 1);
+					// S'il passe dans un colis on assigne
+					if (colis.get(j).getPoidsRestant() >= p.getPoids()
+									&& colis.get(j).getVolumeRestant() >= p.getVolume()) {
+						colis.get(j).addProduitQuantite(p, 1);
 						assigne = true;
 					}
 				}
@@ -100,17 +106,41 @@ public class Sample {
 
 	/**
 	 * Assign a colis to a chariot.
+	 *
 	 * @param colis colis
 	 * @param chariots chariots
 	 * @param config configuration
 	 * @return liste de chariots
 	 */
 	public List<Chariot> colisToChariot(
-					List<Colis> colis, 
-					List<Chariot> chariots, 
+					List<Colis> colis,
+					List<Chariot> chariots,
 					Configuration config
 	) {
 		Boolean assigne = false;
+
+		for (int i = 0; i < colis.size(); i++) {
+			//List<QuantiteProduit> p = colis.get(i).getProduits();
+			int aveId = 0;
+			int minId = 99999999;
+			int maxId = 0;
+			int aveMaxMin = 0;
+			for (int j = 0; j < colis.get(i).getProduits().size(); j++) {
+				int a = colis.get(i).getProduits().get(j).getProduit().getLocalisation().getId();
+				aveId += a;
+				if (a < minId) {
+					minId = a;
+				}
+				if (a > maxId) {
+					maxId = a;
+				}
+			}
+			aveId /= colis.get(i).getProduits().size();
+			aveMaxMin = (maxId + minId) / 2;
+			colis.get(i).setAverageProductId(minId);
+		}
+
+		Collections.sort(colis, (Colis a1, Colis a2) -> a1.getAverageId() - a2.getAverageId());
 
 		for (Colis col : colis) {
 			assigne = false;
@@ -146,19 +176,6 @@ public class Sample {
 			r = r.concat(chariots.get(i).toString());
 		}
 		return r;
-	}
-
-	/**
-	 * Local main fucntion.
-	 * @param args standard arguments
-	 */
-	public static void main(String[] args) {
-		Instance instance = new Instance("./instances/instance_0116_131940_Z2.txt");
-		instance.parse();
-		instance.dispatch();
-		Sample solution = new Sample(instance);
-		solution.populateChariots();
-		System.out.println(solution.toString());
 	}
 
 	List<Chariot> getChariots() {
