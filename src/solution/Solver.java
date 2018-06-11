@@ -80,15 +80,15 @@ public class Solver {
 			for (Integer i = 0; i < qtt; i++) {
 				assigne = false;
 
-				// Parcourt des colis existants
-				for (Colis col : colis) {
+				// Parcourt des colis
+				for (Integer j = colis.size() - 1; j >= 0; j--) {
 					if (assigne) {
 						break; // Si assigné, on sort
 					}
-					if (col.getPoidsRestant() >= p.getPoids()
-									&& col.getVolumeRestant() >= p.getVolume()
-					) { // S'il passe dans un colis on assigne
-						col.addProduitQuantite(p, 1);
+					// S'il passe dans un colis on assigne
+					if (colis.get(j).getPoidsRestant() >= p.getPoids()
+									&& colis.get(j).getVolumeRestant() >= p.getVolume()) {
+						colis.get(j).addProduitQuantite(p, 1);
 						assigne = true;
 					}
 				}

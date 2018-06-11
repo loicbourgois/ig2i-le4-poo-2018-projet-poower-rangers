@@ -21,11 +21,13 @@ import metier.QuantiteProduit;
 
 /**
  * Solver.
+ *
  * @author antoine
  */
 public class OptimumDistance {
 
 	private Instance instance;
+	public List<Chariot> chariots;
 
 	public OptimumDistance(Instance instance) {
 		this.instance = instance;
@@ -33,6 +35,7 @@ public class OptimumDistance {
 
 	/**
 	 * Trouve une distance optimale.
+	 *
 	 * @param entrepot entrepot
 	 * @param config configuration
 	 * @return liste de chariots
@@ -49,11 +52,14 @@ public class OptimumDistance {
 
 		chariots.add(new Chariot(config.getNbBoxesTrolley()));
 
+		insertionSortColis(colis);
+
 		return colisToChariot(colis, chariots, config);
 	}
 
 	/**
 	 * Assign des produits à un colis.
+	 *
 	 * @param commande commande
 	 * @param config config
 	 * @return list de colis
@@ -73,10 +79,8 @@ public class OptimumDistance {
 		insertionSort(produitsCommandes);
 
 		for (Produit p : produitsCommandes) {
-			// TODO: Si 80% remplis passer au suivant 
-			// et ne pas mettre produit trop loin id > à +5/+10/+15?
 			Integer qtt = commande.getQttProduit(p);
-
+			
 			for (Integer i = 0; i < qtt; i++) {
 				assigne = false;
 
@@ -85,9 +89,9 @@ public class OptimumDistance {
 					if (assigne) {
 						break; // Si assigné, on sort
 					}
+					// S'il passe dans un colis on assigne
 					if (col.getPoidsRestant() >= p.getPoids() 
-									&& col.getVolumeRestant() >= p.getVolume()
-					) { // S'il passe dans un colis on assigne
+									&& col.getVolumeRestant() >= p.getVolume()) {
 						col.addProduitQuantite(p, 1);
 						assigne = true;
 					}
@@ -96,8 +100,8 @@ public class OptimumDistance {
 				// Aucun colis libre, création d'un nouveau
 				if (!assigne) {
 					Colis newColis = new Colis(
-									config.getPoidsMax(), 
-									config.getValueMax(), 
+									config.getPoidsMax(),
+									config.getValueMax(),
 									commande
 					);
 					newColis.addProduitQuantite(p, 1);
@@ -111,6 +115,7 @@ public class OptimumDistance {
 
 	/**
 	 * Assign a colis to a cart.
+	 *
 	 * @param colis colis
 	 * @param chariots cart
 	 * @param config configurations
@@ -147,6 +152,7 @@ public class OptimumDistance {
 
 	/**
 	 * Sort products.
+	 *
 	 * @param produits produits
 	 * @return liste de produits
 	 */
@@ -169,5 +175,72 @@ public class OptimumDistance {
 		}
 
 		return produits;
+	}
+
+	/**
+	 * Sort colis.
+	 *
+	 * @param colis ListeColis
+	 * @return liste de produits
+	 */
+	public List<Colis> insertionSortColis(List<Colis> colis) {
+
+		Colis newColis = new Colis();
+		int i = 1;
+
+		while (i < colis.size()) {
+			newColis = colis.get(i);
+			int j = i - 1;
+			int k = i;
+			while (j >= 0 && averageLocalisation(colis.get(j)) > averageLocalisation(newColis)) {
+				k = j + 1;
+				colis.set(k, colis.get(j));
+				j--;
+			}
+			colis.set(k, newColis);
+			i++;
+		}
+
+		return colis;
+	}
+
+	/**
+	 * Average of localisation.
+	 *
+	 * @param colis colis
+	 * @return int average
+	 */
+	public int averageLocalisation(Colis colis) {
+		int average = 0;
+		int compt = 0;
+		for (QuantiteProduit p : colis.getProduits()) {
+			average += p.getProduit().getLocalisation().getId();
+			compt++;
+		}
+
+		return average / compt;
+	}
+
+	/**
+	 * Local main fucntion.
+	 *
+	 * @param args standard arguments
+	 */
+	public static void main(String[] args) {
+		Instance instance = new Instance("./instances/instance_0116_131940_Z2.txt");
+		instance.parse();
+		instance.dispatch();
+		Sample solution = new Sample(instance);
+		solution.populateChariots();
+		System.out.println(solution.toString());
+	}
+
+	public void populateChariots() {
+		this.chariots = new ArrayList<>();
+		this.chariots.addAll(optimumDistanceSolution(instance.getEntrepot(), instance.getConfig()));
+	}
+
+	List<Chariot> getChariots() {
+		return this.chariots;
 	}
 }
