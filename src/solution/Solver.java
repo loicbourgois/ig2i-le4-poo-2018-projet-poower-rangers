@@ -193,8 +193,8 @@ public class Solver {
 				maxId = a;
 			}
 		}
-			
-		switch(idSelect) {
+		
+		switch (idSelect) {
 			case 0 :
 				return minId;
 			case 1 :
