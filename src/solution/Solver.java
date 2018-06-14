@@ -110,6 +110,7 @@ public class Solver {
 	 * @param colis colis
 	 * @param assigne boolean
 	 * @param p produit
+	 * @return boolean
 	 */
 	private Boolean loopColis(List<Colis> colis, Boolean assigne, Produit p) {
 		// Parcourt des colis
@@ -149,17 +150,8 @@ public class Solver {
 
 		Collections.sort(colis, (Colis a1, Colis a2) -> a1.getAverageId() - a2.getAverageId());
 
-		for (Colis col : colis) {
-			assigne = false;
-			for (Chariot ch : chariots) {
-				if (assigne) {
-					break;
-				}
-				if (ch.getColis().size() < config.getNbBoxesTrolley()) {
-					ch.addColis(col);
-					assigne = true;
-				}
-			}
+		for (Colis col : colis) {			
+			assigne = loopChariots(config, false, col);
 
 			if (!assigne) {
 				Chariot newChariot = new Chariot(config.getNbBoxesTrolley());
@@ -206,6 +198,28 @@ public class Solver {
 			default :
 				return 0;
 		}
+	}
+	
+	/**
+	 * Loop chariots.
+	 *
+	 * @param config configuration
+	 * @param assigne boolean
+	 * @param col colis
+	 * @return boolean
+	 */
+	private Boolean loopChariots(Configuration config, Boolean assigne, Colis col) {
+		for (Chariot ch : chariots) {
+			if (assigne) {
+				break;
+			}
+			if (ch.getColis().size() < config.getNbBoxesTrolley()) {
+				ch.addColis(col);
+				assigne = true;
+			}
+		}
+		
+		return assigne;
 	}
 	
 	public void populateChariots() {
