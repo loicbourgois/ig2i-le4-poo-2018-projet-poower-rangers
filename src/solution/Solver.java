@@ -222,6 +222,9 @@ public class Solver {
 		return assigne;
 	}
 	
+	/**
+	 * Add all chariots.
+	 */
 	public void populateChariots() {
 		this.chariots = new ArrayList<>();
 		this.chariots.addAll(solverSolution(instance.getEntrepot(), instance.getConfig()));
