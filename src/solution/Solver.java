@@ -79,13 +79,17 @@ public class Solver {
 	}
 	
 	/**
-	 * Loop qtt of a product
+	 * Loop qtt of a product.
 	 *
 	 * @param colis colis
 	 * @param p produit
 	 * @param qtt integer
 	 */
-	private void loopQttProd(Commande cmd, Configuration config, List<Colis> colis, Produit p, Integer qtt) {
+	private void loopQttProd(Commande cmd, 
+														Configuration config,
+														List<Colis> colis,
+														Produit p,
+														Integer qtt) {
 		for (Integer i = 0; i < qtt; i++) {
 			Boolean assigne = false;
 
@@ -101,7 +105,7 @@ public class Solver {
 	}
 	
 	/**
-	 * Loop colis
+	 * Loop colis.
 	 *
 	 * @param colis colis
 	 * @param assigne boolean
