@@ -62,44 +62,53 @@ public class Solver {
 	 *
 	 * @param commande commande
 	 * @param config configuration
-	 * @return
+	 * @return liste colis
 	 */
 	public List<Colis> productToColis(Commande commande, Configuration config) {
 		List<Colis> colis = new ArrayList<>();
 
 		colis.add(new Colis(config.getPoidsMax(), config.getValueMax(), commande));
-
-		Boolean assigne = false;
-
+		
 		for (QuantiteProduit qp : commande.getProduitsCommandes()) {
 			Produit p = qp.getProduit();
 			Integer qtt = qp.getQuantite();
 
-			for (Integer i = 0; i < qtt; i++) {
-				assigne = false;
-
-				// Parcourt des colis
-				for (Integer j = colis.size() - 1; j >= 0; j--) {
-					if (assigne) {
-						break; // Si assigné, on sort
-					}
-					// S'il passe dans un colis on assigne
-					if (colis.get(j).getPoidsRestant() >= p.getPoids()
-									&& colis.get(j).getVolumeRestant() >= p.getVolume()) {
-						colis.get(j).addProduitQuantite(p, 1);
-						assigne = true;
-					}
-				}
-
-				// Aucun colis libre, création d'un nouveau
-				if (!assigne) {
-					Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), commande);
-					newColis.addProduitQuantite(p, 1);
-					colis.add(newColis);
-				}
-			}
+			loopQttProd(commande, config, colis, p, qtt);
 		}
 		return colis;
+	}
+	
+	/**
+	 * Loop qtt of a product
+	 *
+	 * @param colis colis
+	 * @param p produit
+	 * @param qtt integer
+	 */
+	private void loopQttProd(Commande cmd, Configuration config, List<Colis> colis, Produit p, Integer qtt) {
+		for (Integer i = 0; i < qtt; i++) {
+			Boolean assigne = false;
+
+			// Parcourt des colis
+			for (Integer j = colis.size() - 1; j >= 0; j--) {
+				if (assigne) {
+					break; // Si assigné, on sort
+				}
+				// S'il passe dans un colis on assigne
+				if (colis.get(j).getPoidsRestant() >= p.getPoids()
+								&& colis.get(j).getVolumeRestant() >= p.getVolume()) {
+					colis.get(j).addProduitQuantite(p, 1);
+					assigne = true;
+				}
+			}
+
+			// Aucun colis libre, création d'un nouveau
+			if (!assigne) {
+				Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), cmd);
+				newColis.addProduitQuantite(p, 1);
+				colis.add(newColis);
+			}
+		}
 	}
 
 	/**
