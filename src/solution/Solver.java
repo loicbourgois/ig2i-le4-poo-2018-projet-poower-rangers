@@ -140,27 +140,11 @@ public class Solver {
 					List<Chariot> chariots,
 					Configuration config
 	) {
+		Integer idSelect = 0;
 		Boolean assigne = false;
 
 		for (int i = 0; i < colis.size(); i++) {
-			//List<QuantiteProduit> p = colis.get(i).getProduits();
-			int aveId = 0;
-			int minId = 99999999;
-			int maxId = 0;
-			int aveMaxMin = 0;
-			for (int j = 0; j < colis.get(i).getProduits().size(); j++) {
-				int a = colis.get(i).getProduits().get(j).getProduit().getLocalisation().getId();
-				aveId += a;
-				if (a < minId) {
-					minId = a;
-				}
-				if (a > maxId) {
-					maxId = a;
-				}
-			}
-			aveId /= colis.get(i).getProduits().size();
-			aveMaxMin = (maxId + minId) / 2;
-			colis.get(i).setAverageProductId(minId);
+			colis.get(i).setAverageProductId(loopProduct(colis, i, idSelect));
 		}
 
 		Collections.sort(colis, (Colis a1, Colis a2) -> a1.getAverageId() - a2.getAverageId());
@@ -186,7 +170,44 @@ public class Solver {
 
 		return chariots;
 	}
-
+	
+	/**
+	 * Loop colis.
+	 *
+	 * @param colis colis
+	 * @param assigne boolean
+	 * @param p produit
+	 */
+	private Integer loopProduct(List<Colis> colis, Integer i, Integer idSelect) {
+		Integer aveId = 0;
+		Integer minId = Integer.MAX_VALUE;
+		Integer maxId = 0;
+		
+		for (int j = 0; j < colis.get(i).getProduits().size(); j++) {
+			int a = colis.get(i).getProduits().get(j).getProduit().getLocalisation().getId();
+			aveId += a;
+			if (a < minId) {
+				minId = a;
+			}
+			if (a > maxId) {
+				maxId = a;
+			}
+		}
+			
+		switch(idSelect) {
+			case 0 :
+				return minId;
+			case 1 :
+				return maxId;
+			case 2 :
+				return (aveId / colis.get(i).getProduits().size());
+			case 3 :
+				return ((maxId + minId) / 2);
+			default :
+				return 0;
+		}
+	}
+	
 	public void populateChariots() {
 		this.chariots = new ArrayList<>();
 		this.chariots.addAll(solverSolution(instance.getEntrepot(), instance.getConfig()));
