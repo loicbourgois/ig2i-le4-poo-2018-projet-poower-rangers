@@ -93,7 +93,7 @@ public class Solver {
 		for (Integer i = 0; i < qtt; i++) {
 			Boolean assigne = false;
 
-			loopColis(colis, assigne, p);
+			assigne = loopColis(colis, assigne, p);
 
 			// Aucun colis libre, création d'un nouveau
 			if (!assigne) {
@@ -111,7 +111,7 @@ public class Solver {
 	 * @param assigne boolean
 	 * @param p produit
 	 */
-	private void loopColis(List<Colis> colis, Boolean assigne, Produit p) {
+	private Boolean loopColis(List<Colis> colis, Boolean assigne, Produit p) {
 		// Parcourt des colis
 		for (Integer j = colis.size() - 1; j >= 0; j--) {
 			if (assigne) {
@@ -124,6 +124,7 @@ public class Solver {
 				assigne = true;
 			}
 		}
+		return assigne;
 	}
 
 	/**
