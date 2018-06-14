@@ -44,7 +44,7 @@ public class Solver {
 	 * @param config configuration
 	 * @return liste de chariots
 	 */
-	public List<Chariot> sampleSolution(Entrepot entrepot, Configuration config) {
+	public List<Chariot> solverSolution(Entrepot entrepot, Configuration config) {
 		List<Chariot> chariots = new ArrayList<>();
 		List<Colis> colis = new ArrayList<>();
 
@@ -166,7 +166,7 @@ public class Solver {
 
 	public void populateChariots() {
 		this.chariots = new ArrayList<>();
-		this.chariots.addAll(sampleSolution(instance.getEntrepot(), instance.getConfig()));
+		this.chariots.addAll(solverSolution(instance.getEntrepot(), instance.getConfig()));
 	}
 
 	@Override
