@@ -6,25 +6,23 @@
 
 package test;
 
+import metier.*;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import metier.Chariot;
-import metier.Colis;
-import metier.Commande;
-import metier.Entrepot;
-import metier.Localisation;
-import metier.Produit;
 
 /**
  * Test the persistence.
+ *
  * @author Rod
  */
 public class TestPersist {
 
 	/**
 	 * Main function for the test.
+	 *
 	 * @param args standard arguments
 	 */
 	public static void main(String[] args) {
@@ -110,10 +108,10 @@ public class TestPersist {
 				et.rollback();
 			}
 		} finally {
-			if (em != null && em.isOpen()) {
+			if (em.isOpen()) {
 				em.close();
 			}
-			if (emf != null && emf.isOpen()) {
+			if (emf.isOpen()) {
 				emf.close();
 			}
 		}

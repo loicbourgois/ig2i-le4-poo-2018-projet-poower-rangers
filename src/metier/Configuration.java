@@ -6,14 +6,7 @@
 
 package metier;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Configuration associated with an Instance.
@@ -82,8 +75,7 @@ public class Configuration {
 
 	@Override
 	public int hashCode() {
-		int hash = 5;
-		return hash;
+		return 5;
 	}
 
 	@Override
@@ -104,10 +96,7 @@ public class Configuration {
 		if (this.poidsMax != other.poidsMax) {
 			return false;
 		}
-		if (this.valueMax != other.valueMax) {
-			return false;
-		}
-		return true;
+		return this.valueMax == other.valueMax;
 	}
 
 	@Override

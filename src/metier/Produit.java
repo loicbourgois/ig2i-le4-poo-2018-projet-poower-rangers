@@ -6,13 +6,7 @@
 
 package metier;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Product. Has 2 dimensions : weight and volume. 
@@ -81,8 +75,7 @@ public class Produit {
 
 	@Override
 	public int hashCode() {
-		int hash = 5;
-		return hash;
+		return 5;
 	}
 
 	@Override
@@ -103,10 +96,7 @@ public class Produit {
 		if (this.poids != other.poids) {
 			return false;
 		}
-		if (this.volume != other.volume) {
-			return false;
-		}
-		return true;
+		return this.volume == other.volume;
 	}
 
 	public int getId() {
