@@ -18,7 +18,6 @@ import metier.Commande;
 import metier.Configuration;
 import metier.Entrepot;
 import metier.Instance;
-import metier.Output;
 import metier.Produit;
 import metier.QuantiteProduit;
 
@@ -30,7 +29,6 @@ import metier.QuantiteProduit;
 public class Solver {
 
 	private Instance instance;
-	private Output output;
 	public List<Chariot> chariots;
 
 	public Solver(Instance instance) {
