@@ -172,11 +172,11 @@ public class Solver {
 	}
 	
 	/**
-	 * Loop colis.
+	 * Loop products.
 	 *
 	 * @param colis colis
-	 * @param assigne boolean
-	 * @param p produit
+	 * @param i integer
+	 * @param idSelect integer
 	 */
 	private Integer loopProduct(List<Colis> colis, Integer i, Integer idSelect) {
 		Integer aveId = 0;
