@@ -6,16 +6,8 @@
 
 package metier;
 
+import javax.persistence.*;
 import java.util.Objects;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * Distance from a localisation to another.
@@ -79,10 +71,7 @@ public class Distance {
 		if (!Objects.equals(this.arrivee, other.arrivee)) {
 			return false;
 		}
-		if (!Objects.equals(this.distance, other.distance)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.distance, other.distance);
 	}
 
 	@Override

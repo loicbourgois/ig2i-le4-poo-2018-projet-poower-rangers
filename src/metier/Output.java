@@ -6,8 +6,6 @@
 
 package metier;
 
-import static java.util.stream.Collectors.toList;
-
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -24,9 +24,8 @@ import java.util.logging.Logger;
 public class Output {
 
 	private int roundCount;
-	private int colisCount;
 	private String str;
-	private boolean strGenerated;
+	private boolean strGenerated = false;
 	private ArrayList<ArrayList<ArrayList<Integer>>> rounds;
 	private String filename;
 	private List<Chariot> chariots;
@@ -47,31 +46,12 @@ public class Output {
 		this.roundCount = chariots.size();
 		this.chariots = chariots;
 		this.filename = inputFilename.replace(".txt", "_sol.txt").replace("instances", "solutions");
-		System.out.println(this.filename);
+		Logger.getLogger(Output.class.getName()).info(this.filename);
 	}
+
+
 
 	private void generateStr() {
-		this.str = "";
-		this.str = this.str.concat("//NbTournees" + "\n");
-		this.str = this.str.concat(this.roundCount + "\n");
-		int idPackage = 1;
-		for (int i = 0; i < this.roundCount; i++) {
-			this.str = this.str.concat("//IdTournes NbColis" + "\n");
-			this.str = this.str.concat((i + 1) + " " + rounds.get(i).size() + "\n");
-			this.str = this.str.concat("//IdColis IdCommandeInColis NbProducts "
-							+ "IdProd1 QtyProd1 IdProd2 QtyProd2 ..." + "\n");
-			for (int j = 0; j < rounds.get(i).size(); j++) {
-				this.str = this.str.concat(idPackage + " " + "0" + " " + rounds.get(i).get(j).size() / 2);
-				for (int k = 0; k < rounds.get(i).get(j).size(); k++) {
-					this.str = this.str.concat(" " + Integer.toString(rounds.get(i).get(j).get(k)));
-				}
-				this.str = this.str.concat("\n");
-				idPackage++;
-			}
-		}
-	}
-
-	private void generateStr2() {
 		this.str = "";
 		this.str = this.str.concat("//NbTournees" + "\n");
 		this.str = this.str.concat(this.roundCount + "\n");
@@ -112,7 +92,7 @@ public class Output {
 	 */
 	public String toString() {
 		if (!strGenerated) {
-			this.generateStr2();
+			this.generateStr();
 		}
 		return this.str;
 	}

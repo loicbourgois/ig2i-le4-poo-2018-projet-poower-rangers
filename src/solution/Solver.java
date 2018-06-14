@@ -8,6 +8,7 @@ package solution;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +30,7 @@ import metier.QuantiteProduit;
 public class Solver {
 
 	private Instance instance;
-	public List<Chariot> chariots;
+	private List<Chariot> chariots;
 
 	public Solver(Instance instance) {
 		this.instance = instance;
@@ -43,7 +44,7 @@ public class Solver {
 	 * @return liste de chariots
 	 */
 	public List<Chariot> solverSolution(Entrepot entrepot, Configuration config) {
-		List<Chariot> chariots = new ArrayList<>();
+		List<Chariot> chariotsList = new ArrayList<>();
 		List<Colis> colis = new ArrayList<>();
 
 		Set<Commande> commandes = entrepot.getCommandes();
@@ -52,9 +53,9 @@ public class Solver {
 			colis.addAll(productToColis(c, config));
 		}
 
-		chariots.add(new Chariot(config.getNbBoxesTrolley()));
+		chariotsList.add(new Chariot(config.getNbBoxesTrolley()));
 
-		return colisToChariot(colis, chariots, config);
+		return colisToChariot(colis, chariotsList, config);
 	}
 
 	/**
@@ -148,7 +149,7 @@ public class Solver {
 			colis.get(i).setAverageProductId(loopProduct(colis, i, idSelect));
 		}
 
-		Collections.sort(colis, (Colis a1, Colis a2) -> a1.getAverageId() - a2.getAverageId());
+		Collections.sort(colis, Comparator.comparingInt(Colis::getAverageId));
 
 		for (Colis col : colis) {			
 			assigne = loopChariots(config, false, col);

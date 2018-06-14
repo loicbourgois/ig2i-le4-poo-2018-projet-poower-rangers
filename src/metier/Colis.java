@@ -6,20 +6,10 @@
 
 package metier;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * Représente un colis.
@@ -55,7 +45,7 @@ public class Colis {
 	 * Default constructor.
 	 */
 	public Colis() {
-		this.produits = new ArrayList<QuantiteProduit>();
+		this.produits = new ArrayList<>();
 		this.averageProductId = -1;
 	}
 
@@ -136,8 +126,7 @@ public class Colis {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		return hash;
+		return 7;
 	}
 
 	@Override
@@ -164,10 +153,7 @@ public class Colis {
 		if (!Objects.equals(this.commande, other.commande)) {
 			return false;
 		}
-		if (!Objects.equals(this.produits, other.produits)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.produits, other.produits);
 	}
 
 	@Override

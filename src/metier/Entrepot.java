@@ -6,17 +6,10 @@
 
 package metier;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * Entrepot.
@@ -128,8 +121,7 @@ public class Entrepot {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		return hash;
+		return 7;
 	}
 
 	@Override
@@ -156,10 +148,7 @@ public class Entrepot {
 		if (!Objects.equals(this.commandes, other.commandes)) {
 			return false;
 		}
-		if (!Objects.equals(this.chariots, other.chariots)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.chariots, other.chariots);
 	}
 
 	@Override
