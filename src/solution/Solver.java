@@ -89,24 +89,35 @@ public class Solver {
 		for (Integer i = 0; i < qtt; i++) {
 			Boolean assigne = false;
 
-			// Parcourt des colis
-			for (Integer j = colis.size() - 1; j >= 0; j--) {
-				if (assigne) {
-					break; // Si assigné, on sort
-				}
-				// S'il passe dans un colis on assigne
-				if (colis.get(j).getPoidsRestant() >= p.getPoids()
-								&& colis.get(j).getVolumeRestant() >= p.getVolume()) {
-					colis.get(j).addProduitQuantite(p, 1);
-					assigne = true;
-				}
-			}
+			loopColis(colis, assigne, p);
 
 			// Aucun colis libre, création d'un nouveau
 			if (!assigne) {
 				Colis newColis = new Colis(config.getPoidsMax(), config.getValueMax(), cmd);
 				newColis.addProduitQuantite(p, 1);
 				colis.add(newColis);
+			}
+		}
+	}
+	
+	/**
+	 * Loop colis
+	 *
+	 * @param colis colis
+	 * @param assigne boolean
+	 * @param p produit
+	 */
+	private void loopColis(List<Colis> colis, Boolean assigne, Produit p) {
+		// Parcourt des colis
+		for (Integer j = colis.size() - 1; j >= 0; j--) {
+			if (assigne) {
+				break; // Si assigné, on sort
+			}
+			// S'il passe dans un colis on assigne
+			if (colis.get(j).getPoidsRestant() >= p.getPoids()
+							&& colis.get(j).getVolumeRestant() >= p.getVolume()) {
+				colis.get(j).addProduitQuantite(p, 1);
+				assigne = true;
 			}
 		}
 	}
